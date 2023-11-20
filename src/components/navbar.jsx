@@ -21,7 +21,7 @@ export const Navbar = () => {
 
 
   return <>
-    <nav className="navbar navbar-expand-lg py-3 navbar-dark bg-dark shadow-sm">
+    <nav dir="rtl" className="navbar navbar-expand-lg py-3 navbar-dark bg-dark shadow-sm" >
       <div className="container">
         <a href="#" className="navbar-brand">
 
@@ -36,7 +36,7 @@ export const Navbar = () => {
           <ul className="navbar-nav ml-auto">
             <li className="nav-item"><NavLink className="nav-link" to={"about"}>אודות</NavLink></li>
             {(!isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"connect"}>הזדהות</NavLink></li>}
-            {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"connect"} onClick={()=>{d(FillFlagO(false), sessionStorage.setItem('Current_User', null))}}>התנתקות</NavLink></li>}
+            {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"connect"} onClick={() => { d(FillFlagO(false), sessionStorage.setItem('Current_User', null)) }}>התנתקות</NavLink></li>}
             <li className="nav-item"><NavLink className="nav-link" to={"register"}>הרשמה</NavLink></li>
             {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"newEvent"}>להוספת ארוע חדש</NavLink></li>}
             {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"ShowEventOfOwner"}>להצגת ארועים  קודמים</NavLink></li>}

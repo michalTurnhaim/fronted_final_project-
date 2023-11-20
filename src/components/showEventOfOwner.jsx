@@ -23,7 +23,7 @@ export const ShowEventOfOwner = () => {
     }, [])
     return <>
         {arrNameImg.map((p) =>
-            <Link key={p} to="/moreDetails" state={p} ><img key={p} width={'30%'} height={'50%'} style={{marginLeft:'0.5%'}} alt="" src={`https://localhost:44325/${p.nameFileInvitationDto}`}></img></Link>
+            <Link key={p} to="/sideBar" state={p} ><img key={p} width={'30%'} height={'50%'} style={{marginLeft:'0.5%'}} alt="" src={`https://localhost:44325/${p.nameFileInvitationDto}`}></img></Link>
         )}
     </>
 }

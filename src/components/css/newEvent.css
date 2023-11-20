@@ -1,0 +1,12 @@
+.new_event_card {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding: 16px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 55%; 
+    background-color:rgb(241, 228, 245);
+    /* border: solid 1px black; */
+    border-radius: 20px;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}

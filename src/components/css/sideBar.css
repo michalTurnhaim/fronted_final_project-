@@ -1,0 +1,26 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: #f0f0f0;
+    z-index: 100;
+  }
+  
+  .sidebar h1 {
+    text-align: center;
+    margin-top: 5%;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    padding: 3% 0;
+    margin-left: 5%;
+  }
+  

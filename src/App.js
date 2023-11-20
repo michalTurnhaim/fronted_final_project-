@@ -5,15 +5,22 @@ import { BrowserRouter } from 'react-router-dom';
 import { Routing } from './components/routing';
 import './bootstrap.css'
 import newstore from './redux/store';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/private-theming';
+
+
 
 function App() {
   return (
     <div >
-      <Provider store={newstore}>
-     <BrowserRouter>
-          <Routing></Routing>
-        </BrowserRouter>
+      
+        <Provider store={newstore}>
+          <BrowserRouter>
+            <Routing></Routing>
+          </BrowserRouter>
         </Provider>
+       
+
     </div>
   );
 }

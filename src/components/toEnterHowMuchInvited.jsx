@@ -3,11 +3,12 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import { FillFilterInvitedToEvent } from "../redux/action/InvitedToEventFilterAction";
 import { useLocation, useNavigate } from "react-router";
+import { TextField } from "@mui/material";
 
 export const ToEnterInvitedAmount = () => {
     const params = useLocation()
     let n = useNavigate()
-    let myinvited= useSelector(l=>l.InvitedToEventReducer.objInvit)
+    let myinvited = useSelector(l => l.InvitedToEventReducer.objInvit)
     const [newInvited, setnewInvited] = useState(params.state)
     let mydispatch = useDispatch()
     let girls = useRef()
@@ -19,8 +20,11 @@ export const ToEnterInvitedAmount = () => {
     debugger
     console.log(myinvited)
 
-    
-    
+    // const getTypeEvent=()=>{
+    //     axios.get('https://localhost:44325/api/typeEvent/getAllTypeEvent').then(x=>
+    //     )
+    // }
+
 
     const update = () => {
         debugger
@@ -61,22 +65,22 @@ export const ToEnterInvitedAmount = () => {
         <div style={{ width: '20%', border: 'solid 2px gray', backgroundColor: 'pink', display: 'inline-block', marginRight: '30px', marginTop: '30px', boxShadow: '10px 10px', margin: 'auto', textAlign: 'position' }} >
             <div>
                 {/* <label>הכנס כמות המבוגרים</label> */}
-                <div style={{ display: 'inline', marginRight: '5px' }}><input readOnly style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות המבוגרים'} ref={boyAdalt} onChange={(e) => setnewInvited({ ...newInvited, numSonAdultsDto: parseInt(e.target.value),isComeDto:true })}  ></input></div>
+                <div style={{ display: 'inline', marginRight: '5px' }}><input readOnly style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות המבוגרים'} ref={boyAdalt} onChange={(e) => setnewInvited({ ...newInvited, numSonAdultsDto: parseInt(e.target.value), isComeDto: true })}  ></input></div>
                 <br></br>
                 {/* <label>הכנס כמות המבוגרות</label> */}
-                <div style={{ display: 'inline', marginRight: '5px' }}><input style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות המבוגרות'} ref={girlAdalt} onChange={(e) => setnewInvited({ ...newInvited, numDaughterAdultsDto: parseInt(e.target.value),isComeDto:true })}  ></input></div>
+                <div style={{ display: 'inline', marginRight: '5px' }}><input style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות המבוגרות'} ref={girlAdalt} onChange={(e) => setnewInvited({ ...newInvited, numDaughterAdultsDto: parseInt(e.target.value), isComeDto: true })}  ></input></div>
                 <br></br>
                 {/* <label>הכנס כמות הנערים</label> */}
-                <div style={{ display: 'inline', marginRight: '5px' }}><input  style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות הנערים'} ref={boyTeneeger} onChange={(e) => setnewInvited({ ...newInvited, numteenageBoysDto: parseInt(e.target.value),isComeDto:true })}   ></input></div>
+                <div style={{ display: 'inline', marginRight: '5px' }}><input style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות הנערים'} ref={boyTeneeger} onChange={(e) => setnewInvited({ ...newInvited, numteenageBoysDto: parseInt(e.target.value), isComeDto: true })}   ></input></div>
                 <br></br>
                 {/* <label>הכנס כמות הנערות</label> */}
-                <div style={{ display: 'inline', marginRight: '5px' }}><input style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות הנערות'} ref={girlTeneeger} onChange={(e) => setnewInvited({ ...newInvited, numTeenageGirlsDto: parseInt(e.target.value),isComeDto:true })}   ></input></div>
+                <div style={{ display: 'inline', marginRight: '5px' }}><input style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות הנערות'} ref={girlTeneeger} onChange={(e) => setnewInvited({ ...newInvited, numTeenageGirlsDto: parseInt(e.target.value), isComeDto: true })}   ></input></div>
                 <br></br>
                 {/* <label>הכנס כמות הילדים</label> */}
-                <div style={{ display: 'inline', marginRight: '5px' }}><input style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות הילדים'} ref={boys} onChange={(e) => setnewInvited({ ...newInvited, numBoysDto: parseInt(e.target.value),isComeDto:true })}  ></input></div>
+                <div style={{ display: 'inline', marginRight: '5px' }}><input style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות הילדים'} ref={boys} onChange={(e) => setnewInvited({ ...newInvited, numBoysDto: parseInt(e.target.value), isComeDto: true })}  ></input></div>
                 <br></br>
                 {/* <label>הכנס כמות הילדות</label> */}
-                <div style={{ display: 'inline', marginRight: '5px' }}><input style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות הילדות'} ref={girls} onChange={(e) => setnewInvited({ ...newInvited, numGirlsDto: parseInt(e.target.value),isComeDto:true })}   ></input></div>
+                <div style={{ display: 'inline', marginRight: '5px' }}><input style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות הילדות'} ref={girls} onChange={(e) => setnewInvited({ ...newInvited, numGirlsDto: parseInt(e.target.value), isComeDto: true })}   ></input></div>
                 <br></br>
                 <button onClick={() => update()}>לאישור</button>
                 {/* {isshow == p.prodIdDTO &&<td> <img src={`https://localhost:7195/${p.imgDTO}`} style={{width:'150px',height:'150px'}}></img></td>} */}
@@ -86,6 +90,18 @@ export const ToEnterInvitedAmount = () => {
                 {/* <div><button onClick={() => addImg(p.prodIdDTO)}>לפרטים נוספים</button></div> */}
                 <br></br>
                 <br></br>
+                {/* <TextField
+                    required color="secondary" id="outlined-select-currency-native" select label="סוג הארוע" defaultValue="סוג הארוע" SelectProps={{ native: true, }}
+                    helperText="יש לבחור את סוג הארוע" onChange={(e) => findIdEvent(e)}>
+                    <option >
+                        בחר סוג ארוע
+                    </option>
+                    {listtypes.map((option) => (
+                        <option key={option.idTypeEventDto} value={option.nameTypeEventDto}>
+                            {option.nameTypeEventDto}
+                        </option>
+                    ))}
+                </TextField> */}
             </div>
         </div>
 

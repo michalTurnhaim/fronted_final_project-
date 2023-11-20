@@ -35,8 +35,9 @@ export class UploadForm2 extends React.Component {
   render() {
     return (
       <form onSubmit={e => this.submit(e)}>
-        <input type="file" accept=".jpg,.png" onChange={e => this.setFile(e)} />
-        <button type="submit">אישור</button>
+        <input style={{marginLeft:'54%'}} type="file" accept=".jpg,.png" onChange={e => this.setFile(e)} />
+        <br></br>
+        <button style={{marginLeft:'80.76%',marginTop:'8px'}} type="submit">אישור</button>
       </form>
 
     

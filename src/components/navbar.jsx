@@ -3,7 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import { Outlet } from "react-router-dom"
 import { FillFlagO } from '../redux/action/flagAction'
-
+import { Box } from "@mui/system";
+import '../App.css'
 
 export const Navbar = () => {
   let d = useDispatch()
@@ -21,7 +22,8 @@ export const Navbar = () => {
 
 
   return <>
-    <nav dir="rtl" className="navbar navbar-expand-lg py-3 navbar-dark bg-dark shadow-sm" >
+    <nav style={{ backgroundColor: '#3b3a30',position: 'fixed',width: '100%',top: 0,'z-index': '1000',
+   }}  dir="rtl" className="navbar navbar-expand-lg py-3 navbar-dark shadow-sm" >
       <div className="container">
         <a href="#" className="navbar-brand">
 
@@ -31,21 +33,25 @@ export const Navbar = () => {
         </a>
 
         <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" className="navbar-toggler"><span className="navbar-toggler-icon"></span></button>
-        {/* <p>שלום {user.firstNameInvitedDto}  {user.lastNameInvitedDto}</p> */}
+        
         <div id="navbarSupportedContent" className="collapse navbar-collapse">
           <ul className="navbar-nav ml-auto">
-            <li className="nav-item"><NavLink className="nav-link" to={"about"}>אודות</NavLink></li>
-            {(!isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"connect"}>הזדהות</NavLink></li>}
-            {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"connect"} onClick={() => { d(FillFlagO(false), sessionStorage.setItem('Current_User', null)) }}>התנתקות</NavLink></li>}
-            <li className="nav-item"><NavLink className="nav-link" to={"register"}>הרשמה</NavLink></li>
-            {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"newEvent"}>להוספת ארוע חדש</NavLink></li>}
-            {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"ShowEventOfOwner"}>להצגת ארועים  קודמים</NavLink></li>}
-            {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"showeventorders"}>אישור השתתפות בשמחות שהוזמנתי אליהם</NavLink></li>}
-
+            <div className="row">
+              <li className="nav-item"><NavLink className="nav-link" to={"about"}>אודות</NavLink></li>
+              {(!isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"connect"}>התחברות</NavLink></li>}
+              {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"connect"} onClick={() => { d(FillFlagO(false), sessionStorage.setItem('Current_User', null)) }}>התנתקות</NavLink></li>}
+              {(!isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"register"}>הרשמה</NavLink></li>}
+              {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"newEvent"}>הוספת ארוע חדש</NavLink></li>}
+              {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"ShowEventOfOwner"}>הצגת הארועים שלי</NavLink></li>}
+              {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"showeventorders"}>אשור השתתפות בשמחות</NavLink></li>}
+           {(user!=null)&&<li >שלום {user.firstNameInvitedDto}  {user.lastNameInvitedDto}</li>} 
+           </div>
           </ul>
         </div>
       </div>
     </nav>
-    <Outlet></Outlet>
+    <Box sx={{pt: 13}}>
+      <Outlet></Outlet>
+    </Box>
   </>
 }

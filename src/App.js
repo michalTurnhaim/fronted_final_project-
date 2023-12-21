@@ -7,6 +7,7 @@ import './bootstrap.css'
 import newstore from './redux/store';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/private-theming';
+import MapComponent from './components/tryAdress';
 
 
 
@@ -14,11 +15,11 @@ function App() {
   return (
     <div >
       
-        <Provider store={newstore}>
+       
           <BrowserRouter>
             <Routing></Routing>
+            {/* <MapComponent></MapComponent> */}
           </BrowserRouter>
-        </Provider>
        
 
     </div>

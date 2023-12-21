@@ -14,14 +14,15 @@ export const AddInvited = () => {
     let myidtype = useRef()
     let myemail = useRef()
     const params = useLocation()
-    let id = params.state
+    let obj=useSelector(x=>x.OwnerOfEventReducer.object)
+    // let id = params.state
     const [user, setuser] = useState({})
-    const [invitedtoevent, setinvitedtoevent] = useState({ emailInvitedDto: "", idEventDto: id, idTypeInviteDto: 6002, isComeDto: false })
+    const [invitedtoevent, setinvitedtoevent] = useState({ emailInvitedDto: "", idEventDto: obj.idEventDto, idTypeInviteDto: 6002, isComeDto: false })
     let d = useDispatch()
 
     const chec = (e) => {
         setuser({ ...user, emailInvitedDto: e.target.value })
-        setinvitedtoevent({ ...invitedtoevent, emailInvitedDto: e.target.value })
+        setinvitedtoevent({...invitedtoevent, emailInvitedDto: e.target.value })
 
     }
     const add = () => {
@@ -66,15 +67,20 @@ export const AddInvited = () => {
 
             axios.post("https://localhost:44325/api/InvitedToEvent/addTheInvitedToEvent", invitedtoevent).then(x => {
                 console.log(x.data)
+                setuser({});
             })
 
             axios.get(`https://localhost:44325/api/Functions/invitedToEventDtoList/${invitedtoevent.idEventDto}`).then((k) => {
                     // d(getList(k.data),
-                    sessionStorage.setItem('ListOfInvitedPerOwner',  JSON.stringify(k.data))
+                    // sessionStorage.setItem('ListOfInvitedPerOwner',  JSON.stringify(k.data))
+                    console.log(k.data)
                 }
             )
 
             // }
+            axios.get(`https://localhost:44325/api/Functions/SendEmail/${user.emailInvitedDto}/${obj.nameFileInvitationDto}`).then(n => {
+               debugger
+             })
 
         }
     }

@@ -1,16 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { FillFilterInvitedToEvent } from "../redux/action/InvitedToEventFilterAction";
 import { useLocation, useNavigate } from "react-router";
 import { TextField } from "@mui/material";
+import { success } from "./sweetAlert";
+
 
 export const ToEnterInvitedAmount = () => {
     const params = useLocation()
     let n = useNavigate()
     let myinvited = useSelector(l => l.InvitedToEventReducer.objInvit)
     const [newInvited, setnewInvited] = useState(params.state)
-    let mydispatch = useDispatch()
     let girls = useRef()
     let boys = useRef()
     let girlAdalt = useRef()
@@ -18,13 +19,36 @@ export const ToEnterInvitedAmount = () => {
     let girlTeneeger = useRef()
     let boyTeneeger = useRef()
     debugger
-    console.log(myinvited)
+    let newDate = new Date()
+    let date = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+    const [listOwner, setListOwner] = useState([])
 
+    const[dateOfEvent,setdateOfEvent] =useState(new Date())
+
+    console.log(date)
+    console.log(myinvited)
+    useEffect(() => {
+        debugger
+        axios.get("https://localhost:44325/api/OwnerOfEvent/getAllOwnerOfEvent").then(x => {
+
+            console.log(x.data)
+            setListOwner(...listOwner, x.data)
+
+        })
+        for (let index = 0; index < listOwner.length; index++) {
+            if(listOwner[index].idEventDto==myinvited.idEventDto)
+                setdateOfEvent(...dateOfEvent,listOwner[index].dateOfEventDto)
+            
+        }
+    console.log(dateOfEvent)
+
+    }, [])
     // const getTypeEvent=()=>{
     //     axios.get('https://localhost:44325/api/typeEvent/getAllTypeEvent').then(x=>
     //     )
     // }
-
 
     const update = () => {
         debugger
@@ -65,7 +89,7 @@ export const ToEnterInvitedAmount = () => {
         <div style={{ width: '20%', border: 'solid 2px gray', backgroundColor: 'pink', display: 'inline-block', marginRight: '30px', marginTop: '30px', boxShadow: '10px 10px', margin: 'auto', textAlign: 'position' }} >
             <div>
                 {/* <label>הכנס כמות המבוגרים</label> */}
-                <div style={{ display: 'inline', marginRight: '5px' }}><input readOnly style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות המבוגרים'} ref={boyAdalt} onChange={(e) => setnewInvited({ ...newInvited, numSonAdultsDto: parseInt(e.target.value), isComeDto: true })}  ></input></div>
+                <div style={{ display: 'inline', marginRight: '5px' }}><input style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות המבוגרים'} ref={boyAdalt} onChange={(e) => setnewInvited({ ...newInvited, numSonAdultsDto: parseInt(e.target.value), isComeDto: true })}  ></input></div>
                 <br></br>
                 {/* <label>הכנס כמות המבוגרות</label> */}
                 <div style={{ display: 'inline', marginRight: '5px' }}><input style={{ margin: 'auto', textAlign: 'center', position: 'center' }} id={'amount'} type={"number"} min={"1"} placeholder={'הכנס כמות המבוגרות'} ref={girlAdalt} onChange={(e) => setnewInvited({ ...newInvited, numDaughterAdultsDto: parseInt(e.target.value), isComeDto: true })}  ></input></div>

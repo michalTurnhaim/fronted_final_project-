@@ -2,25 +2,34 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import "./showAllInvited.css"
 import axios from "axios";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
+import { getList } from "../redux/action/listInvitedAction";
+import { useDispatch } from "react-redux";
 export const ShowAllInvited = () => {
-    const params = useLocation()
-  let obj = params.state.obj
-   // let list= JSON.parse(sessionStorage.getItem('ListOfInvitedPerOwner'))
-  const[list,setList]=useState([])
-  //  console.log(list);
+    debugger
+   let d= useDispatch();
+    let params = useLocation();
+    let obj = params.state;
+    let myObj=useSelector(x=>x.OwnerOfEventReducer.object)
+    console.log("ShowAllInvited", obj);
+
+    // let list= JSON.parse(sessionStorage.getItem('ListOfInvitedPerOwner'))
+    const [list, setList] = useState([])
+    //  console.log(list);
 
     useEffect(() => {
         debugger
-        axios.get(`https://localhost:44325/api/Functions/invitedToEventDtoList/${obj.idEventDto}`).then((k) => {
-            // d(getList(k.data),
-          //  sessionStorage.setItem('ListOfInvitedPerOwner', JSON.stringify(k.data))
-          setList(k.data)
+        axios.get(`https://localhost:44325/api/Functions/invitedToEventDtoList/${myObj.idEventDto}`).then((k) => {
+            // d(getList(k.data)),
+            //  sessionStorage.setItem('ListOfInvitedPerOwner', JSON.stringify(k.data))
+            update_list(k.data)
         }
         )
         //list = JSON.parse(sessionStorage.getItem('ListOfInvitedPerOwner'))
     }, [])
-
+    const update_list = (data) => {
+        setList(data)
+    }
     return <>
         <div className="row">
             <div className="col-lg-10 mx-auto mb-4">

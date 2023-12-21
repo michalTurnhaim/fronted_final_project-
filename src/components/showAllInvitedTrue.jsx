@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 export const ShowAllInvitedTrue = () => {
+    debugger
     let listTrue = []
-    let sumnumGirlsDto=0
+    let sumnumGirlsDto = 0
     let sumnumBoysDto = 0
     let sumnumDaughterAdultsDto = 0
     let sumnumSonAdultsDto = 0
@@ -9,10 +10,10 @@ export const ShowAllInvitedTrue = () => {
     let sumnumteenageBoysDto = 0
 
     let list = useSelector(n => n.ListInvitedReducer.list)
-   
+
     for (let index = 0; index < list.length; index++) {
-        if (list[index].isComeDto==true)
-        listTrue.push(list[index]);   
+        if (list[index].isComeDto == true)
+            listTrue.push(list[index]);
     }
     console.log(listTrue)
     for (let x = 0; x < listTrue.length; x++) {
@@ -21,17 +22,49 @@ export const ShowAllInvitedTrue = () => {
         sumnumBoysDto += Number(element.numBoysDto)
         sumnumDaughterAdultsDto += Number(element.numDaughterAdultsDto)
         sumnumSonAdultsDto += Number(element.numSonAdultsDto)
-        sumnumTeenageGirlsDto +=Number(element.numTeenageGirlsDto)
+        sumnumTeenageGirlsDto += Number(element.numTeenageGirlsDto)
         sumnumteenageBoysDto += Number(element.numteenageBoysDto)
-        
+
     }
     return <>
-        <div>כמות ילדות{sumnumGirlsDto}</div>
-        <div>כמות ילדים{sumnumBoysDto}</div>
-        <div>כמות מבוגרות{sumnumDaughterAdultsDto}</div>
-        <div>כמות מבוגרים{sumnumSonAdultsDto}</div>
-        <div>כמות נערים{sumnumteenageBoysDto}</div>
-        <div>כמות נערות{sumnumTeenageGirlsDto}</div>
+        <div className="card-header">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            כמות ילדות
+                        </th>
+                        <th>
+                            כמות ילדים
+                        </th>
+                        <th>
+                            כמות מבוגרות
+                        </th>
+                        <th>
+                            כמות מבוגרים
+                        </th>
+                        <th>
+                            כמות נערים
+                        </th>
+                        <th>
+                            כמות נערות
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td>{sumnumGirlsDto}</td>
+                    <td>{sumnumBoysDto}</td>
+                    <td>{sumnumDaughterAdultsDto}</td>
+                    <td>{sumnumSonAdultsDto}</td>
+                    <td>{sumnumteenageBoysDto}</td>
+                    <td>{sumnumTeenageGirlsDto}</td>
+                </tbody>
+            </table>
+
+
+        </div>
+        <div className="card-body"></div>
         {listTrue.map(x => (
             <div className="container" key={x}>
 
@@ -52,16 +85,16 @@ export const ShowAllInvitedTrue = () => {
                                                     <i className="zmdi zmdi-pin mr-2"></i> {x.emailInvitedDto}
                                                 </li> */}
                                                 <li className="mr-md-4">
-                                                    <i className="zmdi zmdi-money mr-2"></i>{x.numGirlsDto}: מספר ילדות 
+                                                    <i className="zmdi zmdi-money mr-2"></i>{x.numGirlsDto}: מספר ילדות
                                                 </li>
                                                 <li className="mr-md-4">
-                                                    <i className="zmdi zmdi-time mr-2"></i> {x.numBoysDto}: מספר ילדים 
+                                                    <i className="zmdi zmdi-time mr-2"></i> {x.numBoysDto}: מספר ילדים
                                                 </li>
                                                 <li className="mr-md-4">
                                                     <i className="zmdi zmdi-time mr-2"></i> {x.numDaughterAdultsDto}: מספר מבוגרות
                                                 </li>
-                                                 <li className="mr-md-4">
-                                                    <i className="zmdi zmdi-time mr-2"></i> {x.numSonAdultsDto}: מספר מבוגרים 
+                                                <li className="mr-md-4">
+                                                    <i className="zmdi zmdi-time mr-2"></i> {x.numSonAdultsDto}: מספר מבוגרים
                                                 </li>
                                                 <li className="mr-md-4">
                                                     <i className="zmdi zmdi-time mr-2"></i> {x.numTeenageGirlsDto}: מספר נערות

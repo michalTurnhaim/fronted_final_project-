@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.transparent-link {
+  opacity: 0.5;
+  
+}
+
+/* .card-header {
+  background-color:#b2c2bf;
+} */
+/* .TextField {
+  background-color: #000;
+  color: green;
+} */
+
+

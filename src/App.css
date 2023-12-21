@@ -12,6 +12,10 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+nav {
+  top: 0;
+  width: 100%; /* Ensure it spans the entire width */
+}
 
 .App-header {
   background-color: #282c34;
@@ -27,6 +31,12 @@
 .App-link {
   color: #61dafb;
 }
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 @keyframes App-logo-spin {
   from {

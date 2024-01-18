@@ -15,6 +15,7 @@ export const EzorIshi = () => {
     debugger
     let n = useNavigate()
     let mail = useRef()
+    let password = useRef()
     let list = useSelector(n => n.InvitedToEventReducer.listInvitedToEvent)
     let d = useDispatch()
     let listF = []
@@ -31,7 +32,7 @@ export const EzorIshi = () => {
     const connect = () => {
         debugger
         if (mail.current.value != null) {
-            axios.get(`https://localhost:44325/api/Invited/login/${mail.current.value}`).then(c => {
+            axios.get(`https://localhost:44325/api/Invited/login/${mail.current.value}/${password.current.value}`).then(c => {
                 console.log(c.data);
                 if (c.status == 200) {
                     d(FillFlagO(true))
@@ -103,11 +104,16 @@ export const EzorIshi = () => {
                         {/* <TextField  sx={{ mt: 2 ,ml:6,mr:4}} inputRef={myemail} required id="outlined-number" color="primary" label="מייל" type="text" InputLabelProps={{ shrink: true, }} /> */}
                     </Grid>
                     <Grid item xs={12} sm={12}  >
+                        <TextField sx={{ mt: 2, ml: 4, mr: 4 }} inputRef={password} id="outlined-number" label="הכנס סיסמא" variant="outlined" type="int" label="סיסמא" InputLabelProps={{ shrink: true, }} />
+                        {/* <TextField  sx={{ mt: 2 ,ml:6,mr:4}} inputRef={myemail} required id="outlined-number" color="primary" label="מייל" type="text" InputLabelProps={{ shrink: true, }} /> */}
+                    </Grid>
+                    <Grid item xs={12} sm={12}  >
                         <Button sx={{ mt: 2, ml: 13, mr: 4, mb: 8, bgcolor: "#c0ded9", color: "#3b3a30" }} onClick={() => connect()}>אישור</Button>
                     </Grid>
                 </CardContent>
             </Card>
             {/* </div> */}
         </Box>
+        
     </div>
 }

@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router";
 import { getList } from "../redux/action/listInvitedAction"
+import { error } from "./sweetAlert";
 
 export const AddInvited = () => {
     //https://localhost:44325/api/InvitedToEvent/addTheInvitedToEvent
@@ -14,18 +15,23 @@ export const AddInvited = () => {
     let myidtype = useRef()
     let myemail = useRef()
     const params = useLocation()
-    let obj=useSelector(x=>x.OwnerOfEventReducer.object)
+    const [password, setPassword] = useState(0)
+    let obj = useSelector(x => x.OwnerOfEventReducer.object)
     // let id = params.state
     const [user, setuser] = useState({})
     const [invitedtoevent, setinvitedtoevent] = useState({ emailInvitedDto: "", idEventDto: obj.idEventDto, idTypeInviteDto: 6002, isComeDto: false })
     let d = useDispatch()
 
     const chec = (e) => {
-        setuser({ ...user, emailInvitedDto: e.target.value })
-        setinvitedtoevent({...invitedtoevent, emailInvitedDto: e.target.value })
+        let num = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000
+        setPassword(num)
+        //changePassword(num)
+        setuser({ ...user, emailInvitedDto: e.target.value, passWordDto: num })
+        setinvitedtoevent({ ...invitedtoevent, emailInvitedDto: e.target.value })
 
     }
-    const add = () => {
+   
+    async function add() {
         debugger
         //שמירת כתובת מייל שהוזנה
         let email = user.emailInvitedDto
@@ -38,51 +44,82 @@ export const AddInvited = () => {
             //בדיקה אם קיים מוזמן זה כבר
             if (email == element.emailInvitedDto) {
                 flag = true
-                alert("הזמנתם את המוזמן הזה")
+                error("הזמנתם את המוזמן הזה")
                 break;
             }
         }
         //אם לא קיים
-        if (flag == false) {
-            //בדיקה אם כתובת מייל זה רשומה במערכת בתור INVITED
-            axios.get(`https://localhost:44325/api/Invited/login/${email}`).then(c => {
+           if (flag == false) {
+       // בדיקה אם כתובת מייל זה רשומה במערכת בתור INVITED
+        try {
+            await axios.get(`https://localhost:44325/api/Invited/checEmailIfExists/${email}`).then(c => {
                 //אם לא רשום
-                if (c.status != 200) {
+                if (c.status == 204) {
                     debugger
                     flag2 = true
                     //הכנסת מוזמן חדש
-
                     axios.post("https://localhost:44325/api/Invited/addTheInvited", user).then(x => {
                         console.log(x.data)
                         d(getList(x.data))
 
                     })
                 }
+
+                else{
+                    // changePassword(c.data.passWordDto)
+                    setPassword(c.data.passWordDto)
+                    setuser(({ ...user,passWordDto: c.data.passWordDto }))
+                }
+
             }
             )
-            //הכנסת מוזמן לארוע חדש
-            // else {
-            console.log("*****************");
-            console.log(invitedtoevent);
+        }
+        catch{
 
-            axios.post("https://localhost:44325/api/InvitedToEvent/addTheInvitedToEvent", invitedtoevent).then(x => {
+        }
+        //הכנסת מוזמן לארוע חדש
+        // else {
+        console.log("*****************");
+        console.log(invitedtoevent);
+        try {
+            await axios.post("https://localhost:44325/api/InvitedToEvent/addTheInvitedToEvent", invitedtoevent).then(x => {
                 console.log(x.data)
                 setuser({});
             })
-
-            axios.get(`https://localhost:44325/api/Functions/invitedToEventDtoList/${invitedtoevent.idEventDto}`).then((k) => {
-                    // d(getList(k.data),
-                    // sessionStorage.setItem('ListOfInvitedPerOwner',  JSON.stringify(k.data))
-                    console.log(k.data)
-                }
-            )
-
-            // }
-            axios.get(`https://localhost:44325/api/Functions/SendEmail/${user.emailInvitedDto}/${obj.nameFileInvitationDto}`).then(n => {
-               debugger
-             })
+        }
+        catch{
 
         }
+       
+
+
+
+            // axios.get(`https://localhost:44325/api/Functions/invitedToEventDtoList/${invitedtoevent.idEventDto}`).then((k) => {
+            //         // d(getList(k.data),
+            //         // sessionStorage.setItem('ListOfInvitedPerOwner',  JSON.stringify(k.data))
+            //         console.log(k.data)
+            //     }
+            // )
+
+            // }
+            try {
+                await axios.get(`https://localhost:44325/api/Functions/SendEmail/${user.emailInvitedDto}/${password}/${obj.nameFileInvitationDto}`).then(n => {
+                    debugger
+                })
+            }
+            catch{ }
+
+
+        }
+        //יצירת סיסמא למשתמש החדש
+        //    async function changePassword (num) {
+        //         //הגרלת מספר לסיסמא
+        //         debugger
+
+
+
+
+        //     }
     }
 
     return <>

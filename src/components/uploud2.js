@@ -1,6 +1,8 @@
 
 import axios, { AxiosResponse } from 'axios';
 import React from "react";
+import Grid from '@mui/system/Unstable_Grid';
+import { Button } from '@mui/material';
 export class UploadForm2 extends React.Component {
   constructor(props) {
     super(props);
@@ -35,10 +37,10 @@ export class UploadForm2 extends React.Component {
   render() {
     return (
       <form onSubmit={e => this.submit(e)}>
-      <div >
-        <input  style={{marginLeft:'54%'}} type="file" accept=".jpg,.png" onChange={e => this.setFile(e)} />
-        </div>
-        <button className="btn btn" style={{backgroundColor:"#c0ded9",marginLeft:'80.76%',marginTop:'8px'}} type="submit">העלה</button>
+      <Grid >
+        <input  sx={{marginLeft:'54%'}} type="file" accept=".jpg,.png" onChange={e => this.setFile(e)} />
+        </Grid>
+        <Button sx={{bgcolor: "#c0ded9", color: "#3b3a30", backgroundColor:"#c0ded9",marginLeft:'80.76%',marginTop:'8px'}} type="submit">העלה</Button>
       </form>
 
     

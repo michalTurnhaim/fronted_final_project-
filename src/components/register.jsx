@@ -10,7 +10,7 @@ export const Register = () => {
     let mylastName = useRef()
     let myemail = useRef()
     let newobj = {}
-
+    let mypassword = useRef()
 
     const Background = styled("div")({
         position: "absolute",
@@ -26,7 +26,9 @@ export const Register = () => {
         let obj = {
             emailInvitedDto: myemail.current ?.value,
             firstNameInvitedDto: myfirstName.current ?.value,
-            lastNameInvitedDto: mylastName.current ?.value}
+            lastNameInvitedDto: mylastName.current ?.value,
+            passwordDto:mypassword.current?.value}
+
         newobj = { ...obj }
         addInvited()
     }
@@ -77,9 +79,14 @@ export const Register = () => {
                         <Grid item xs={12} sm={12} >
                             <TextField  sx={{ mt: 2 ,ml:6,mr:4}} inputRef={myemail} required id="outlined-number" color="primary" label="מייל" type="text" InputLabelProps={{ shrink: true, }} />
                         </Grid>
+                        <Grid item xs={12} sm={12}  >
+                        <TextField sx={{ mt: 2, ml: 6, mr: 4 }} inputRef={mypassword} id="outlined-number" label="הכנס סיסמא" variant="outlined" type="int" label="סיסמא" InputLabelProps={{ shrink: true, }} />
+                        {/* <TextField  sx={{ mt: 2 ,ml:6,mr:4}} inputRef={myemail} required id="outlined-number" color="primary" label="מייל" type="text" InputLabelProps={{ shrink: true, }} /> */}
+                    </Grid>
                         <Grid item xs={12} sm={12} >
                             <Button  sx={{ mt: 2,ml:6,mr:6, bgcolor: "#c0ded9", color: "#3b3a30" }} onClick={() => chec()}>להוספה</Button>
                         </Grid>
+                        
                     </CardContent>
                 </Card>
         </Box>

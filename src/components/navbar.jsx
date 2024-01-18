@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom"
 import { FillFlagO } from '../redux/action/flagAction'
 import { Box } from "@mui/system";
 import '../App.css'
+import logoImage from "../img/logoNavBar.png"
 
 export const Navbar = () => {
   let d = useDispatch()
@@ -22,18 +23,20 @@ export const Navbar = () => {
 
 
   return <>
-    <nav style={{ backgroundColor: '#3b3a30',position: 'fixed',width: '100%',top: 0,'z-index': '1000',
-   }}  dir="rtl" className="navbar navbar-expand-lg py-3 navbar-dark shadow-sm" >
+    <nav style={{
+      backgroundColor: ' #3b3a30', position: 'fixed', width: '100%', top: 0, 'z-index': '1000',
+    }} dir="rtl" className="navbar navbar-expand-lg py-3 navbar-dark shadow-sm" >
+
       <div className="container">
-        <a href="#" className="navbar-brand">
+        {/* <a href="#"> */}
 
-          <img src="https://bootstrapious.com/i/snippets/sn-nav-logo/logo.png" width="45" alt="" className="d-inline-block align-middle mr-2"></img>
+        <img src={logoImage} width="100" />
 
-          <span className="text-uppercase font-weight-bold">Company</span>
-        </a>
+        {/* <span className="text-upperwidtheight-bold">Company</span> */}
+        {/* </a> */}
 
-        <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" className="navbar-toggler"><span className="navbar-toggler-icon"></span></button>
-        
+        {/* <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" className="navbar-toggler"><span className="navbar-toggler-icon"></span></button> */}
+
         <div id="navbarSupportedContent" className="collapse navbar-collapse">
           <ul className="navbar-nav ml-auto">
             <div className="row">
@@ -44,13 +47,14 @@ export const Navbar = () => {
               {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"newEvent"}>הוספת ארוע חדש</NavLink></li>}
               {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"ShowEventOfOwner"}>הצגת הארועים שלי</NavLink></li>}
               {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"showeventorders"}>אשור השתתפות בשמחות</NavLink></li>}
-           {(user!=null)&&<li >שלום {user.firstNameInvitedDto}  {user.lastNameInvitedDto}</li>} 
-           </div>
+              {(user != null) && <li >שלום {user.firstNameInvitedDto}  {user.lastNameInvitedDto}</li>}
+            </div>
           </ul>
         </div>
       </div>
     </nav>
-    <Box sx={{pt: 13}}>
+    <Box sx={{ pt: 13 }}>
+
       <Outlet></Outlet>
     </Box>
   </>

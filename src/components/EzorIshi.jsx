@@ -1,9 +1,12 @@
+import * as React from 'react';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { FillAllInvitedToEvent } from "../redux/action/InvitedToEventAction";
-import { TextField, Grid, Box, Typography, Button, Card, CardHeader, CardContent } from "@mui/material";
+import { TextField, Grid, Box, Typography, Button, Card, CardHeader, CardContent, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton } from "@mui/material";
 import { FillFlagI, FillFlagO } from "../redux/action/flagAction";
 import { useNavigate } from "react-router-dom";
 import { FillInvited } from "../redux/action/InvitedAction";
@@ -64,6 +67,14 @@ export const EzorIshi = () => {
         })
     }, [])
 
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
     return <div>
         <Background sx={{ opacity: 0.3, mt: -4 }}></Background>
         <Box
@@ -104,12 +115,33 @@ export const EzorIshi = () => {
                         {/* <TextField  sx={{ mt: 2 ,ml:6,mr:4}} inputRef={myemail} required id="outlined-number" color="primary" label="מייל" type="text" InputLabelProps={{ shrink: true, }} /> */}
                     </Grid>
                     <Grid item xs={12} sm={12}  >
-                        <TextField sx={{ mt: 2, ml: 4, mr: 4 }} inputRef={password} id="outlined-number" label="הכנס סיסמא" variant="outlined" type="int" label="סיסמא" InputLabelProps={{ shrink: true, }} />
+                        {/* <TextField sx={{ mt: 2, ml: 4, mr: 4 }} inputRef={password} id="outlined-number" label="הכנס סיסמא" variant="outlined" type="int" label="סיסמא" InputLabelProps={{ shrink: true, }} /> */}
+                        <FormControl sx={{   mt: 2, ml: 4, mr: 4 , width: '26ch' }}  >
+                            <InputLabel htmlFor="outlined-adornment-password">סיסמא</InputLabel>
+                            <OutlinedInput 
+                            inputRef={password}
+                                id="outlined-adornment-password"
+                                type={showPassword ? 'text' : 'password'}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                                label="סיסמא"
+                            />
+                        </FormControl>
                         {/* <TextField  sx={{ mt: 2 ,ml:6,mr:4}} inputRef={myemail} required id="outlined-number" color="primary" label="מייל" type="text" InputLabelProps={{ shrink: true, }} /> */}
                     </Grid>
                     <Grid item xs={12} sm={12}  >
                         <Button sx={{ mt: 2, ml: 13, mr: 4, mb: 8, bgcolor: "#c0ded9", color: "#3b3a30" }} onClick={() => connect()}>אישור</Button>
-                    </Grid>
+                    </Grid> 
                 </CardContent>
             </Card>
             {/* </div> */}

@@ -4,13 +4,14 @@
     right: 0;
     width: 200px;
     height: 100vh;
-    background-color: #f0f0f0;
+    background-color:#b2c2bf;
     z-index: 100;
   }
   
   .sidebar h1 {
     text-align: center;
     margin-top: 5%;
+    
   }
   
   .sidebar ul {
@@ -21,6 +22,8 @@
   
   .sidebar ul li {
     padding: 3% 0;
-    margin-left: 5%;
+    text-align: center;
+    
+    /* margin-left: 5%; */
   }
   

@@ -16,6 +16,8 @@ import { ShowAllInvited } from "./showAllInvited";
 import { AddInvited } from "./addInvited";
 import { Navbar } from "./navbar";
 import { Sidebar1 } from "./sideBar";
+import { ChangePassword } from "./changePassword";
+import { ChooseNewPassword } from "./ChooseNewPassword";
 
 
 export const Routing = () => {
@@ -40,6 +42,8 @@ export const Routing = () => {
 
 
             <Route path="/endUpdate" element={<EndUpdateTheInvited></EndUpdateTheInvited>}></Route>
+            <Route path="/changePassword" element={<ChangePassword></ChangePassword>}></Route>
+            <Route path="chooseNewPassword" element={<ChooseNewPassword></ChooseNewPassword>}></Route>
 
         </Route>
 

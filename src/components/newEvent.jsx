@@ -36,19 +36,19 @@ const SaveEvent = () => {
 
     setmyObj({ ...myObj, idTypeEventDto: i, EmailOwnerOfEvent: user.emailInvitedDto })
   }
-  return <Grid container>
+  return <Grid>
     <Typography variant="h4"
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'start' }}>
-      למילוי פרטי הארוע</Typography>
-    <Grid container item xs={12} sm={12}>
-      <Grid item xs={6} sm={2}>
-        <TextField required id="outlined-number" label="תאריך הארוע" type="date" InputLabelProps={{ shrink: true, }} onChange={(e) => setmyObj({ ...myObj, DateOfEvent: e.target.value })} />
+      sx={{ textAlign: 'center' }}
+    > למילוי פרטי הארוע</Typography>
+    <Grid container spacing={2} sx={{ mt: 3 }}>
+      <Grid item xs={4}>
+        <TextField sx={{ ml: 3 }} required id="outlined-basic" label="תאריך הארוע" type="date" InputLabelProps={{ shrink: true, }} onChange={(e) => setmyObj({ ...myObj, DateOfEvent: e.target.value })} />
       </Grid>
-      <Grid item xs={6} sm={2}>
-        <TextField required id="outlined-basic" label="כתובת הארוע" variant="outlined" onChange={(e) => setmyObj({ ...myObj, AdressOfEvent: e.target.value })} />
+      <Grid item xs={4}>
+        <TextField sx={{ ml: 3 }} required id="outlined-basic" label="כתובת הארוע" onChange={(e) => setmyObj({ ...myObj, AdressOfEvent: e.target.value })} />
       </Grid>
-      <Grid>
-        <TextField
+      <Grid item xs={4}>
+        <TextField sx={{ ml: 3 }}
           required id="outlined-select-currency-native" select label="סוג הארוע" defaultValue="סוג הארוע" SelectProps={{ native: true, }}
           helperText="יש לבחור את סוג הארוע" onChange={(e) => findIdEvent(e)}>
           <option >
@@ -61,12 +61,12 @@ const SaveEvent = () => {
           ))}
         </TextField>
       </Grid>
-
-      <Grid>
-        <Typography>להעלות הזמנה</Typography>
-        <UploadForm2></UploadForm2>
-      </Grid>
     </Grid>
+    <Grid sx={{ mt: 3 }}>
+      <Typography variant="h4" sx={{ textAlign: 'center' }}>להעלות הזמנה</Typography>
+    </Grid>
+    <UploadForm2></UploadForm2>
+    {/* </Box> */}
   </Grid>
 }
 
@@ -147,7 +147,7 @@ const UploadExcel = () => {
 }
 
 function getSteps() {
-  return ['העלאת קובץ אקסל', 'הורדת קובץ אקסל ומילוי מוזמנים בקובץ', 'הכנסת פרטי ארוע והעלת הזמנה'];
+  return ['העלאת קובץ אקסל', 'הורדת קובץ אקסל ומילוי מוזמנים בקובץ', 'הכנסת פרטי ארוע והעלאת הזמנה'];
 }
 
 function getStepContent(step) {
@@ -218,26 +218,25 @@ export const NewEvent = () => {
   // };
   // let arr = [3, 2, 1]
 
-  return <Box
-    sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      textAlign: 'start',
-      pt: 12
-    }}>
-    <Card item xs={12} sm={12}>
-      <CardHeader sx={{ bgcolor: "#b2c2bf" }}
-        action={
-          <>
+  return <div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'start',
+        pt: 12
+      }}
+    >
+      <Card sx={{ mt: 2 }}>
+        <CardHeader sx={{ bgcolor: "#b2c2bf" }}
+          action={
+
             <Stepper activeStep={activeStep}>
               {steps.map((label, index) => {
                 const stepProps: { completed?: boolean } = {
                   completed: activeStep < index
                 };
-                //     const labalProps=<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
-                //     <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
-                // </svg>
                 const labelProps: { optional?: React.ReactNode } = {};
                 if (isStepOptional(index)) {
                   labelProps.optional = (
@@ -249,7 +248,7 @@ export const NewEvent = () => {
                 }
                 return (
                   <Step key={index} {...stepProps}>
-                    {/* <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel> */}
+
                     <StepLabel  {...labelProps}>{label}</StepLabel>
                   </Step>
 
@@ -257,34 +256,35 @@ export const NewEvent = () => {
                 );
               })}
             </Stepper>
-          </>
-        }
-      />
-      <hr />
 
+          }
+        />
 
-      <CardContent>
-        <Typography>{getStepContent(activeStep)}</Typography>
-
-        <Button
-          id="buttons_class"
-          disabled={activeStep === 2}
-          onClick={handleBack}
-        >
-          Back
+        <CardContent>
+          <Grid item xs={12} sm={12}>
+            <Typography>{getStepContent(activeStep)}</Typography>
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Button
+              id="buttons_class"
+              disabled={activeStep === 2}
+              onClick={handleBack}
+            >
+              Back
               </Button>
-        <Grid>
-          <Button
-            id="buttons_class"
-            variant="contained"
-            color="primary"
-            onClick={handleNext}
-          >
-            {activeStep === 0 ? "Finish" : "Next"}
-          </Button>
-        </Grid>
-      </CardContent>
-    </Card>
-  </Box>
-
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Button
+              id="buttons_class"
+              variant="contained"
+              color="primary"
+              onClick={handleNext}
+            >
+              {activeStep === 0 ? "Finish" : "Next"}
+            </Button>
+          </Grid>
+        </CardContent>
+      </Card>
+    </Box>
+  </div>
 }

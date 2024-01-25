@@ -13,8 +13,8 @@ const defaultTheme = createTheme({
     primary: {
       light: '#c0ded9',
       main: '#c0ded9',
-      dark: '#c0ded9',
-      contrastText: '#c0ded9',
+       dark: '#c0ded9',
+       contrastText: '#3b3a30',
     },
   }
   //   white: {

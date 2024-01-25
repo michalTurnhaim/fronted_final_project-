@@ -1,6 +1,24 @@
 
 import axios, { AxiosResponse } from 'axios';
 import React from "react";
+import Grid from '@mui/system/Unstable_Grid';
+import { Button, Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { success } from './sweetAlert';
+import { error } from './sweetAlert';
+
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
 export class UploadForm extends React.Component {
   constructor(props) {
     super(props);
@@ -19,30 +37,54 @@ export class UploadForm extends React.Component {
         'content-type': 'multipart/form-data',
       },
     };
-    
+
     try {
       const response = await axios.post(url, formData, config);
-      console.log(response);
-    } catch (error) {
-      console.error(error);
+      success("הקובץ עלה בהצלחה ניתן להמשיך הלאה")
+    } catch (errorr) {
+      error("לא ניתן להעלות את הקובץ")
     }
   }
-  
+
   setFile(e) {
     this.setState({ file: e.target.files[0] });
   }
 
+
+
   render() {
     return (
       <form onSubmit={e => this.submit(e)}>
-      <div >
-        <input  style={{marginLeft:'54%'}} type="file" accept=".xlsx" onChange={e => this.setFile(e)} />
-      </div>  
-      <button className="btn btn" style={{backgroundColor:"#c0ded9",marginLeft:'80.76%',marginTop:'8px'}} type="submit">העלה</button>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+          <Grid
+            container
+            spacing={2}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            dir="rtl">
+            <Grid item xs={12} sm={9} md={9}>
+            <Button component="label" sx={{ color: "#eaece5", backgroundColor: "#c0ded9",mt:3}} variant="contained" accept=".xlsx" onChange={e => this.setFile(e)} startIcon={<CloudUploadIcon sx={{ml:1}} />}>
+                בחירת קובץ
+            <VisuallyHiddenInput type="file" />
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={3}  md={3}>
+               <Button sx={{ color: "#3b3a30", backgroundColor: "#c0ded9",mt:3 }} type="submit">העלה</Button>
+            </Grid >
+          </Grid>
+        </Box>
       </form>
 
-    
+
     );
   }
 }
+
+
 

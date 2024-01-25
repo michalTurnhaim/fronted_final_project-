@@ -31,6 +31,9 @@ export const EzorIshi = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
     });
+    const forgetPassword = () => {
+        n("/changePassword")
+    }
     // const [listF, setlistF]=useState([])
     const connect = () => {
         debugger
@@ -138,6 +141,9 @@ export const EzorIshi = () => {
                             />
                         </FormControl>
                         {/* <TextField  sx={{ mt: 2 ,ml:6,mr:4}} inputRef={myemail} required id="outlined-number" color="primary" label="מייל" type="text" InputLabelProps={{ shrink: true, }} /> */}
+                    </Grid>
+                    <Grid item xs={12} sm={12} >
+                        <Button sx={{ mt: 2, mr: 4 }} onClick={() => forgetPassword()} >? שכחת סיסמא</Button>
                     </Grid>
                     <Grid item xs={12} sm={12}  >
                         <Button sx={{ mt: 2, ml: 13, mr: 4, mb: 8, bgcolor: "#c0ded9", color: "#3b3a30" }} onClick={() => connect()}>אישור</Button>

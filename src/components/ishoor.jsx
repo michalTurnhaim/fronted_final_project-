@@ -31,7 +31,7 @@ export const Ishoor = () => {
             
             //  listUsers.filter(x=>x.emailOwnerOfEventDto==listOwnerOfEvent.emailOwnerOfEventDto)
            })
-
+debugger
         if (list.length == 0) {
             axios.get(`https://localhost:44325/api/InvitedToEvent/InvitedToEventbyEmail/${user.emailInvitedDto}`).then(k => {
                 if (k.data.length == 0)

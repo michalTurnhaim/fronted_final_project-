@@ -69,13 +69,13 @@ export class UploadForm extends React.Component {
             alignItems="center"
             dir="rtl">
             <Grid item xs={12} sm={9} md={9}>
-            <Button component="label" sx={{ color: "#eaece5", backgroundColor: "#c0ded9",mt:3}} variant="contained" accept=".xlsx" onChange={e => this.setFile(e)} startIcon={<CloudUploadIcon sx={{ml:1}} />}>
+              <Button component="label" sx={{ color: "#3b3a30", backgroundColor: "#c0ded9", mt: 3 }} variant="contained"   onChange={e => this.setFile(e)} startIcon={<CloudUploadIcon sx={{ ml: 1 }} />}>
                 בחירת קובץ
-            <VisuallyHiddenInput type="file" />
+  <VisuallyHiddenInput type="file" accept=".xlsx" />
               </Button>
             </Grid>
-            <Grid item xs={12} sm={3}  md={3}>
-               <Button sx={{ color: "#3b3a30", backgroundColor: "#c0ded9",mt:3 }} type="submit">העלה</Button>
+            <Grid item xs={12} sm={3} md={3}>
+              <Button sx={{ color: "#3b3a30", backgroundColor: "#c0ded9", mt: 3 }} type="submit">העלה</Button>
             </Grid >
           </Grid>
         </Box>

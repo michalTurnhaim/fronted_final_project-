@@ -197,12 +197,9 @@ export const AddNewEvent = () => {
   const UploadExcel = () => {
     let obj = JSON.parse(sessionStorage.getItem('newEventDatiels'))
     console.log(obj);
-  
     const chec = () => {
       debugger
       sendobj()
-  
-  
     }
     //--------------------------
     //יש לעשות בדיקת תקינות!!!

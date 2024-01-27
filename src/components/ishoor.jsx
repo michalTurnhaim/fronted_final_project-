@@ -30,6 +30,7 @@ export const Ishoor = () => {
             myd(getList(x.data))
 
             //  listUsers.filter(x=>x.emailOwnerOfEventDto==listOwnerOfEvent.emailOwnerOfEventDto)
+
         })
 
         if (list.length == 0) {

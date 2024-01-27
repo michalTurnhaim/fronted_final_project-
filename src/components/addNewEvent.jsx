@@ -17,7 +17,8 @@ import { Grid } from '@mui/material';
 import { UploadForm2 } from "./uploud2";
 import StepConnector from '@mui/material/StepConnector';
 import * as XLSX from 'xlsx';
-
+import { success } from './sweetAlert';
+import { useNavigate } from "react-router";
 
 
 // const steps = ['העלאת קובץ אקסל', 'הורדת קובץ אקסל ומילוי מוזמנים בקובץ', 'הכנסת פרטי ארוע והעלאת הזמנה'];
@@ -25,7 +26,7 @@ const steps = ['הכנסת פרטי ארוע והעלאת הזמנה', 'הורד
 export const AddNewEvent = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-
+  let navigate = useNavigate()
   const isStepOptional = (step) => {
     return step === 1;
   };
@@ -45,8 +46,8 @@ export const AddNewEvent = () => {
       //   debugger
       
         sendobj()
-    
-    
+        success("הארוע נוסף בהצלחה")
+    navigate("/ShowEventOfOwner")
       // }
       //--------------------------
       //יש לעשות בדיקת תקינות!!!
@@ -187,7 +188,7 @@ export const AddNewEvent = () => {
       
       <Typography variant="h6">ומלאו את כל הנתונים ע"פ השדות הנכונים exel הורידו קובץ </Typography>
       <Grid dir="rtl">
-      <Button className="btn btn" sx={{color: "#eaece5", backgroundColor:"#c0ded9",marginTop:'8px',mt:4}} onClick={() => handleDownload()} startIcon={<CloudDownloadIcon sx={{ml:1}}/>}> exel הורדה קובץ </Button>
+      <Button className="btn btn" sx={{color: "#3b3a30", backgroundColor:"#c0ded9",marginTop:'8px',mt:4}} onClick={() => handleDownload()} startIcon={<CloudDownloadIcon sx={{ml:1}}/>}> exel הורדה קובץ </Button>
    </Grid>
     </Grid>
   }

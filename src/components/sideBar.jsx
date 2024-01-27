@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { objownerOfEvent } from "../redux/action/ownerOfEventAction";
 import { getList } from "../redux/action/listInvitedAction";
 import axios from "axios";
+import { Box } from "@mui/system";
 export const Sidebar1 = () => {
   const params = useLocation();
   let d = useDispatch();
@@ -32,17 +33,21 @@ export const Sidebar1 = () => {
 
 
   return <div>
-    <div className="sidebar">
+    
+      
+    <div className="sidebar" style={{marginTop:"87px"}}>
 
-      <h1>Sidebar</h1>
+      {/* <h1>Sidebar</h1> */}
       <ul>
 
-        <li><NavLink to={"addInvited"}>הוספת מוזמנים</NavLink></li>
-        <li><NavLink to={"showAllInvited"}  >הצגת המוזמנים</NavLink></li>
-        <li><NavLink to={"showAllInvitedTrue"}>הצגת המוזמנים שאישרו</NavLink></li>
+        <li ><NavLink style={{ color: '#3b3a30'}} to={"addInvited"}>הוספת מוזמנים</NavLink></li>
+        <li><NavLink style={{ color: '#3b3a30' }} to={"showAllInvited"}  >הצגת המוזמנים</NavLink></li>
+        <li><NavLink style={{ color: '#3b3a30' }} to={"showAllInvitedTrue"}>הצגת המוזמנים שאישרו</NavLink></li>
       </ul>
     </div>
-    <Outlet></Outlet>
+  
+   
+    <Outlet ></Outlet>
   </div>
 
 }

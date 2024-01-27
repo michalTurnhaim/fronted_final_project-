@@ -54,7 +54,7 @@ export const AddInvited = () => {
         try {
             await axios.get(`https://localhost:44325/api/Invited/checEmailIfExists/${email}`).then(c => {
                 //אם לא רשום
-                if (c.status == 204) {
+                if (c.status == 204 ) {
                     debugger
                     flag2 = true
                     //הכנסת מוזמן חדש

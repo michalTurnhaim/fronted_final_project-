@@ -2,7 +2,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { FillAllInvitedToEventObj } from "../redux/action/invitedToEventObj";
 import { error } from "./sweetAlert";
 import Grid from "@mui/system/Unstable_Grid";
@@ -11,13 +11,13 @@ import { getList } from "../redux/action/listInvitedAction";
 
 export const Ishoor = () => {
     debugger
-    let user = useSelector(n => n.InvitedtReducer.obj)
+    let user = JSON.parse(sessionStorage.getItem('Current_User'));
     const [listUsers, setlistUsers] = useState([])
     const myd = useDispatch()
     const [list, setlist] = useState([])
     const [listOwnerOfEvent, setlistOwnerOfEvent] = useState([])
     let nowDate = Date.now();
-
+    let n=useNavigate()
     console.log(list);
     useEffect(() => {
         debugger
@@ -36,7 +36,11 @@ export const Ishoor = () => {
         if (list.length == 0) {
             axios.get(`https://localhost:44325/api/InvitedToEvent/InvitedToEventbyEmail/${user.emailInvitedDto}`).then(k => {
                 if (k.data.length == 0)
-                    error("אינך מוזמן לשום ארוע")
+                {
+                     error("אינך מוזמן לשום ארוע")
+                       n("/newEvent")
+                }
+                   
                 else
                     setlist(k.data)
                 console.log(k.data)

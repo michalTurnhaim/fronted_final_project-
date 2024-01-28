@@ -3,17 +3,21 @@ import { error } from "./sweetAlert";
 import { useState } from "react"
 import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Grid, Paper, Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
 export const ShowEventOfOwner = () => {
     let user = JSON.parse(sessionStorage.getItem('Current_User'));
     const [arrNameImg, setarrNameImg] = useState([])
     let d = useDispatch()
+    let n=useNavigate()
     useEffect(() => {
         if (arrNameImg.length == 0) {
             axios.get(`https://localhost:44325/api/Functions/returnListOfOwnerByEmail/${user.emailInvitedDto}`).then(l => {
                 if (l.data.length == 0)
+                    {
                     error("לא יצרת שום ארוע")
+                    n("/newEvent")
+                }
                 else {
                     setarrNameImg(l.data)
                     debugger

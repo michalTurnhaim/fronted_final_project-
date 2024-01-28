@@ -36,7 +36,15 @@ export const Register = () => {
             passwordDto: mypassword.current ?.value}
 
         newobj = { ...obj }
-        addInvited()
+        axios.get(`https://localhost:44325/api/Invited/checEmailIfExists/${obj.emailInvitedDto}`).then(x=>
+        {
+            if (x.status == 204)
+                addInvited()
+            else
+                error("את/ה רשומ/ה במערכת כבר")
+        }
+        )
+      //  addInvited()
     }
     const addInvited = () => {
         axios.post(`https://localhost:44325/api/Invited/addTheInvited`, newobj).then(x => {

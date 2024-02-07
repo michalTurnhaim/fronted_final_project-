@@ -5,7 +5,6 @@ import { ChooseTypeService } from "./chooseTypeService";
 // import { NewEvent } from "./newEvent";
 //import { ShowEventOrders } from "./showEventOrders";
 import { EzorIshi } from "./EzorIshi";
-import { EndUpdateTheInvited } from "./endUpdateTheInvited";
 import { Register } from "./register"
 import { Ishoor } from "./ishoor";
 import { ShowEventOfOwner } from "./showEventOfOwner";
@@ -42,7 +41,7 @@ export const Routing = () => {
 
 
 
-            <Route path="/endUpdate" element={<EndUpdateTheInvited></EndUpdateTheInvited>}></Route>
+         
             <Route path="/changePassword" element={<ChangePassword></ChangePassword>}></Route>
             <Route path="chooseNewPassword" element={<ChooseNewPassword></ChooseNewPassword>}></Route>
 

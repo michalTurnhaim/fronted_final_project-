@@ -197,27 +197,30 @@ export const AddNewEvent = () => {
   const UploadExcel = () => {
     let obj = JSON.parse(sessionStorage.getItem('newEventDatiels'))
     console.log(obj);
-    const chec = () => {
-      debugger
-      sendobj()
-    }
-    //--------------------------
-    //יש לעשות בדיקת תקינות!!!
-    //--------------------------
-    //שליפת סוגי ארועים
-    const sendobj = () => {
-      debugger
-      axios.post(`https://localhost:44325/api/Functions/postowner`, obj).then(x => {
-        debugger
-        console.log(x.data)
-        axios.put(`https://localhost:44325/api/Functions/BeforSendingEmail/${x.data}`).then(n => {
-          debugger
-        })
   
-      })
+    // const chec = () => {
+    //   debugger
+    //   sendobj()
   
   
-    }
+    // }
+    // //--------------------------
+    // //יש לעשות בדיקת תקינות!!!
+    // //--------------------------
+    // //שליפת סוגי ארועים
+    // const sendobj = () => {
+    //   debugger
+    //   axios.post(`https://localhost:44325/api/Functions/postowner`, obj).then(x => {
+    //     debugger
+    //     console.log(x.data)
+    //     axios.put(`https://localhost:44325/api/Functions/BeforSendingEmail/${x.data}`).then(n => {
+    //       debugger
+    //     })
+  
+    //   })
+  
+  
+    // }
     let d = useDispatch()
     useEffect(() => {
       debugger

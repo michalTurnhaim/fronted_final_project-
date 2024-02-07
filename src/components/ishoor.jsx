@@ -11,7 +11,7 @@ import { getList } from "../redux/action/listInvitedAction";
 
 export const Ishoor = () => {
     debugger
-    let user = useSelector(n => n.InvitedtReducer.obj)
+    let user = JSON.parse(sessionStorage.getItem('Current_User'))
     const [listUsers, setlistUsers] = useState([])
     const myd = useDispatch()
     const [list, setlist] = useState([])

@@ -10,12 +10,40 @@ import { success, error } from "./sweetAlert";
 import { useNavigate } from "react-router";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+//יבוא ספריות לבדיקת תקינות
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+//סכמה של ערכים תקינים
+const validationSchema = yup.object({
+    firstName: yup.string()
+        .matches(/^[\u0590-\u05FFa-zA-Z\s]*$/, 'הכנס שם פרטי תקין')
+        .min(2, 'השם פרטי חייב להכיל לפחות 2 תווים')
+        .max(50, 'השם פרטי יכול להכיל עד 50 תווים')
+       ,
+    lastName: yup.string()
+        .matches(/^[\u0590-\u05FFa-zA-Z\s]*$/, 'הכנס שם משפחה תקין')
+        .min(2, 'השם משפחה חייב להכיל לפחות 2 תווים')
+        .max(50, 'השם משפחה יכול להכיל עד 50 תווים')
+       ,
+    email: yup
+        .string()
+        .email('הכנס מייל תקין')
+        .required('שדה חובה'),
+    password: yup
+        .string()
+        .min(2, 'מינימום אורך הסיסמא הוא 2')
+        .max(20, 'מקסימום אורך הסיסמא הוא 20')
+        .required('שדה חובה'),
+});
 export const Register = () => {
-    let myfirstName = useRef()
-    let mylastName = useRef()
-    let myemail = useRef()
+    //משתנה לבדיקת התקינות
+    const formik = useFormik({
+        initialValues: { firstName: '', lastName:'' ,email: '', password: '' },
+        validationSchema: validationSchema,
+        onSubmit: (values) => { chec(values) },});
+    
     let newobj = {}
-    let mypassword = useRef()
+  
     let navigate = useNavigate()
 
     const Background = styled("div")({
@@ -27,13 +55,14 @@ export const Register = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
     });
-    const chec = () => {
+    const chec = (values) => {
         debugger
         let obj = {
-            emailInvitedDto: myemail.current ?.value,
-            firstNameInvitedDto: myfirstName.current ?.value,
-            lastNameInvitedDto: mylastName.current ?.value,
-            passwordDto: mypassword.current ?.value}
+            emailInvitedDto: values.email,
+            firstNameInvitedDto: values.firstName,
+            lastNameInvitedDto: values.lastName,
+            passwordDto: values.password,
+        }
 
         newobj = { ...obj }
         axios.get(`https://localhost:44325/api/Invited/checEmailIfExists/${obj.emailInvitedDto}`).then(x=>
@@ -41,10 +70,9 @@ export const Register = () => {
             if (x.status == 204)
                 addInvited()
             else
-                error("את/ה רשומ/ה במערכת כבר")
+                error("פרטיך מזוהים במערכת")
         }
         )
-      //  addInvited()
     }
     const addInvited = () => {
         axios.post(`https://localhost:44325/api/Invited/addTheInvited`, newobj).then(x => {
@@ -52,10 +80,6 @@ export const Register = () => {
             console.log(x.data)
             if (x.status = 200) {
                 success("נוספת בהצלחה")
-                myfirstName.current.value = ""
-                mylastName.current.value = ""
-                myemail.current.value = ""
-                mypassword.current.value = ""
                 navigate("/connect")
             }
             else
@@ -97,22 +121,67 @@ export const Register = () => {
                 />
                 <hr />
                 <CardContent>
+                    <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
                     <Grid item xs={12} sm={12}  >
-                        <TextField sx={{ mt: 2, ml: 6, mr: 4 }} inputRef={myfirstName} required id="outlined-basic" color="primary" variant="outlined"  label="שם פרטי"  />
+                            <TextField sx={{ mt: 2, ml: 6, mr: 4 }}
+                                error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                                helperText={formik.touched.firstName && formik.errors.firstName}
+                                value={formik.values.firstName}
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                id="firstName"
+                                name="firstName"
+                                autoComplete="firstName"
+                                type="text"
+                                color="primary"
+                                variant="outlined"
+                                label="שם פרטי"
+                            />
                     </Grid>
                     <Grid item xs={12} sm={12} >
-                        <TextField sx={{ mt: 2, ml: 6, mr: 4 }} inputRef={mylastName} required id="outlined-basic" color="primary" variant="outlined"  label="שם משפחה" />
+                            <TextField sx={{ mt: 2, ml: 6, mr: 4 }}
+                                error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                                helperText={formik.touched.lastName && formik.errors.lastName}
+                                value={formik.values.lastName}
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                id="lastName"
+                                name="lastName"
+                                type="text"
+                               
+                                color="primary"
+                                variant="outlined"
+                                label="שם משפחה"
+                            />
                     </Grid>
                     <Grid item xs={12} sm={12} >
-                    {/* <TextField required id="outlined-basic" label="כתובת הארוע" variant="outlined" onChange={(e) => setmyObj({ ...myObj, AdressOfEvent: e.target.value })} /> */}
-                        <TextField sx={{ mt: 2, ml: 6, mr: 4 }} inputRef={myemail} required id="outlined-basic" color="primary"  variant="outlined"  label="מייל"/>
+                            <TextField sx={{ mt: 2, ml: 6, mr: 4 }} 
+                                
+                                error={formik.touched.email && Boolean(formik.errors.email)}
+                                helperText={formik.touched.email && formik.errors.email}
+                                value={formik.values.email}
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                id="email"
+                                name="email"
+                                type="email"
+
+                                color="primary"
+                                variant="outlined"
+                                label="מייל" />
                     </Grid> 
                     <Grid item xs={12} sm={12}  >
                     <FormControl sx={{  mt: 2, ml: 6, mr: 4 , width: '26ch' }}  >
                             <InputLabel htmlFor="outlined-adornment-password">סיסמא</InputLabel>
                             <OutlinedInput 
-                            inputRef={mypassword}
-                                id="outlined-adornment-password"
+                                error={formik.touched.password && Boolean(formik.errors.password)}
+                                helperText={formik.touched.password && formik.errors.password}
+                                value={formik.values.password}
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                id="password"
+                                name="password"
+                                label="סיסמא"
                                 type={showPassword ? 'text' : 'password'}
                                 endAdornment={
                                     <InputAdornment position="end">
@@ -126,14 +195,13 @@ export const Register = () => {
                                         </IconButton>
                                     </InputAdornment>
                                 }
-                                label="סיסמא"
                             />
                         </FormControl>
                        </Grid>
                     <Grid item xs={12} sm={12} >
-                        <Button sx={{ mt: 2, ml: 6, mr: 6, bgcolor: "#c0ded9", color: "#3b3a30" }} onClick={() => chec()}>להוספה</Button>
+                        <Button sx={{ mt: 2, ml: 6, mr: 6, bgcolor: "#c0ded9", color: "#3b3a30" }} type="submit" >הוספה</Button>
                     </Grid>
-
+                    </Box>
                 </CardContent>
             </Card>
         </Box>

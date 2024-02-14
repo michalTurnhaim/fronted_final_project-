@@ -20,7 +20,7 @@ export const ShowAllInvited = () => {
     useEffect(() => {
         debugger
         axios.get(`https://localhost:44325/api/Functions/invitedToEventDtoList/${myObj.idEventDto}`).then((k) => {
-            // d(getList(k.data)),
+             d(getList(k.data))
             //  sessionStorage.setItem('ListOfInvitedPerOwner', JSON.stringify(k.data))
             update_list(k.data)
         }

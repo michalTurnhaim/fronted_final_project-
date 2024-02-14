@@ -36,15 +36,14 @@ export const Register = () => {
             passwordDto: mypassword.current ?.value}
 
         newobj = { ...obj }
-        axios.get(`https://localhost:44325/api/Invited/checEmailIfExists/${obj.emailInvitedDto}`).then(x=>
-        {
+        axios.get(`https://localhost:44325/api/Invited/checEmailIfExists/${obj.emailInvitedDto}`).then(x => {
             if (x.status == 204)
                 addInvited()
             else
                 error("את/ה רשומ/ה במערכת כבר")
         }
         )
-      //  addInvited()
+        //  addInvited()
     }
     const addInvited = () => {
         axios.post(`https://localhost:44325/api/Invited/addTheInvited`, newobj).then(x => {
@@ -86,7 +85,11 @@ export const Register = () => {
                             <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
                             <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
                         </svg> */}
-            <Card item xs={12} sm={12}>
+            <Typography variant="h3" sx={{ mt:-8 ,textAlign: "center", fontFamily: 'Arial', fontWeight: 'bold', color: '#b2c2bf', position: 'relative' }} >
+                 הרשמה לאתר
+    {/* <span style={{ display: 'block', position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', height: '5px', background: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1440 320\'%3E%3Cpath fill=\'%23b2c2bf\' d=\'M0,288L80,245.3C160,203,320,117,480,117.3C640,117,800,203,960,213.3C1120,224,1280,160,1360,128L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z\'%3E%3C/path%3E%3C/svg%3E")' }}></span> */}
+            </Typography>
+            <Card item xs={12} sm={12} sx={{mt:3}}>
                 <CardHeader
                     sx={{ bgcolor: "#b2c2bf" }}
                     action={
@@ -98,20 +101,20 @@ export const Register = () => {
                 <hr />
                 <CardContent>
                     <Grid item xs={12} sm={12}  >
-                        <TextField sx={{ mt: 2, ml: 6, mr: 4 }} inputRef={myfirstName} required id="outlined-basic" color="primary" variant="outlined"  label="שם פרטי"  />
+                        <TextField sx={{ mt: 2, ml: 6, mr: 4 }} inputRef={myfirstName} required id="outlined-basic" color="primary" variant="outlined" label="שם פרטי" />
                     </Grid>
                     <Grid item xs={12} sm={12} >
-                        <TextField sx={{ mt: 2, ml: 6, mr: 4 }} inputRef={mylastName} required id="outlined-basic" color="primary" variant="outlined"  label="שם משפחה" />
+                        <TextField sx={{ mt: 2, ml: 6, mr: 4 }} inputRef={mylastName} required id="outlined-basic" color="primary" variant="outlined" label="שם משפחה" />
                     </Grid>
                     <Grid item xs={12} sm={12} >
-                    {/* <TextField required id="outlined-basic" label="כתובת הארוע" variant="outlined" onChange={(e) => setmyObj({ ...myObj, AdressOfEvent: e.target.value })} /> */}
-                        <TextField sx={{ mt: 2, ml: 6, mr: 4 }} inputRef={myemail} required id="outlined-basic" color="primary"  variant="outlined"  label="מייל"/>
-                    </Grid> 
+                        {/* <TextField required id="outlined-basic" label="כתובת הארוע" variant="outlined" onChange={(e) => setmyObj({ ...myObj, AdressOfEvent: e.target.value })} /> */}
+                        <TextField sx={{ mt: 2, ml: 6, mr: 4 }} inputRef={myemail} required id="outlined-basic" color="primary" variant="outlined" label="מייל" />
+                    </Grid>
                     <Grid item xs={12} sm={12}  >
-                    <FormControl sx={{  mt: 2, ml: 6, mr: 4 , width: '26ch' }}  >
+                        <FormControl sx={{ mt: 2, ml: 6, mr: 4, width: '26ch' }}  >
                             <InputLabel htmlFor="outlined-adornment-password">סיסמא</InputLabel>
-                            <OutlinedInput 
-                            inputRef={mypassword}
+                            <OutlinedInput
+                                inputRef={mypassword}
                                 id="outlined-adornment-password"
                                 type={showPassword ? 'text' : 'password'}
                                 endAdornment={
@@ -129,9 +132,9 @@ export const Register = () => {
                                 label="סיסמא"
                             />
                         </FormControl>
-                       </Grid>
+                    </Grid>
                     <Grid item xs={12} sm={12} >
-                        <Button sx={{ mt: 2, ml: 6, mr: 6, bgcolor: "#c0ded9", color: "#3b3a30" }} onClick={() => chec()}>להוספה</Button>
+                        <Button sx={{ mt: 2, ml: 15, mr: 6, bgcolor: "#c0ded9", color: "#3b3a30" }} onClick={() => chec()}>להוספה</Button>
                     </Grid>
 
                 </CardContent>

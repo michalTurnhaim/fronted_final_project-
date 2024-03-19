@@ -16,11 +16,13 @@ const validationSchema = yup.object({
         .matches(/^[\u0590-\u05FFa-zA-Z\s]*$/, 'הכנס שם פרטי תקין')
         .min(2, 'השם פרטי חייב להכיל לפחות 2 תווים')
         .max(50, 'השם פרטי יכול להכיל עד 50 תווים')
+        .required('שדה חובה')
     ,
     lastName: yup.string()
         .matches(/^[\u0590-\u05FFa-zA-Z\s]*$/, 'הכנס שם משפחה תקין')
         .min(2, 'השם משפחה חייב להכיל לפחות 2 תווים')
         .max(50, 'השם משפחה יכול להכיל עד 50 תווים')
+        .required('שדה חובה')
     ,
     email: yup
         .string()

@@ -98,7 +98,7 @@ export const Register = () => {
     };
 
     return <div>
-        <Background sx={{ opacity: 0.3, mt: -4 }}></Background>
+        <Background sx={{ opacity: 0.3, mt: -2 }}></Background>
         <Box
             sx={{
                 display: 'flex',

@@ -5,6 +5,8 @@ import axios from "axios";
 import { useLocation, useParams } from "react-router";
 import { getList } from "../redux/action/listInvitedAction";
 import { useDispatch } from "react-redux";
+import { Grid } from "@mui/material";
+import { Box } from "@mui/system";
 export const ShowAllInvited = () => {
     debugger
    let d= useDispatch();
@@ -31,16 +33,29 @@ export const ShowAllInvited = () => {
         setList(data)
     }
     return <>
-        <div className="row">
-            <div className="col-lg-10 mx-auto mb-4">
-                <div className="section-title text-center ">
-                    {/* <h3 className="top-c-sep">Grow your career with us</h3> */}
+        {/* <Grid className="row">
+            <Grid className="col-lg-10 mx-auto mb-4">
+                <Grid className="section-title text-center ">
+                    <h3 className="top-c-sep">Grow your career with us</h3>
 
-                </div>
-            </div>
-        </div>
+                </Grid>
+            </Grid>
+        </Grid> */}
         {list.map(x => (
-            <div className="container" key={x}>
+              <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}>
+              <Grid
+                container
+                spacing={2}
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                dir="rtl">
+            <Grid className="container" key={x}>
 
 
                 <div className="row">
@@ -78,7 +93,9 @@ export const ShowAllInvited = () => {
                     </div>
                 </div>
 
-            </div>
+            </Grid>
+            </Grid>
+            </Box>
         ))
         }
 

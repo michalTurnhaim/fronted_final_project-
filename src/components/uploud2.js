@@ -20,6 +20,7 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 export class UploadForm2 extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -40,6 +41,8 @@ export class UploadForm2 extends React.Component {
 
     try {
       const response = await axios.post(url, formData, config);
+      let o={"flag":true}
+      sessionStorage.setItem('fileup', JSON.stringify(o))
       success("הקובץ עלה בהצלחה ניתן להמשיך הלאה")
     } catch (errorr) {
       error("לא ניתן להעלות את הקובץ")

@@ -24,4 +24,5 @@ export const About =()=>{
         <Typography sx={{fontSize:'130%'}}>,באתר שלנו ניתן ליצור ארוע ולשלוח את ההזמנות לכל המוזמנים בלחיצת כפתור אחת</Typography>
         <Typography sx={{fontSize:'130%'}}>. ניתן גם כן לעקוב מי מהמוזמנים אישר את הגעתו ולהערך בהתאם</Typography>
     </Box></Box>
+
 }

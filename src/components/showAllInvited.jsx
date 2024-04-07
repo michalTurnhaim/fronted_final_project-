@@ -47,6 +47,7 @@ export const ShowAllInvited = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                 pt: 5
               }}>
               <Grid
                 container

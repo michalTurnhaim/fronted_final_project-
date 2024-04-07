@@ -32,12 +32,12 @@ const validationSchema = yup.object({
 });
 
 export const AddInvited = () => {
-
+    const [bool, setbool] = useState(true)
     let list = useSelector(n => n.ListInvitedReducer.list)
-    let password
+    let password;
     let obj = useSelector(x => x.OwnerOfEventReducer.object)
     let invitedtoevent = {}
-let n=useNavigate()
+    let n = useNavigate()
     let d = useDispatch()
     const formik = useFormik({
         initialValues: { firstName: '', lastName: '', email: '' },
@@ -58,6 +58,7 @@ let n=useNavigate()
         debugger
         let flag = false
         let flag2 = false
+        setbool(false)
         //מעבר על רשימת המוזמנים לארוע הספציפי 
 
         for (let i = 0; i < list.length; i++) {
@@ -115,6 +116,7 @@ let n=useNavigate()
             }
             catch{ }
             success("המוזמן נוסף בהצלחה")
+            setbool(true)
             n("/sideBar/showAllInvited")
 
         }
@@ -191,6 +193,7 @@ let n=useNavigate()
 
                     <Grid item xs={12} sm={12} sx={{ textAlign: 'center' }}>
                         <Button
+                            disabled={!bool}
                             type="submit"
                             fullWidth
                             variant="contained"

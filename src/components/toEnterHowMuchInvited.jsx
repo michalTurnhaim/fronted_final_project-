@@ -44,17 +44,22 @@ const validationSchema = yup.object({
         .max(10, 'מקסימום 10')
 });
 export const ToEnterInvitedAmount = () => {
+    debugger
     const params = useLocation()
     let n = useNavigate()
     let myinvited = useSelector(l => l.InvitedToEventReducer.objInvit)
     const [newInvited, setnewInvited] = useState(params.state)
-    
+
     //פונקציות ומשתנים לבדיקת תקינות
     const formik = useFormik({
-        initialValues: { girls: 0, boys: 0, girlAdalt: 0, boyAdalt: 0, girlTeneeger: 0, boyTeneeger: 0 },
+        initialValues: {
+            girls: myinvited.numGirlsDto, boys: myinvited.numBoysDto, girlAdalt: myinvited.numDaughterAdultsDto
+            , boyAdalt: myinvited.numSonAdultsDto, girlTeneeger: myinvited.numTeenageGirlsDto, boyTeneeger: myinvited.numteenageBoysDto
+        },
         validationSchema: validationSchema,
         onSubmit: (values) => { updateObj(values) },
     });
+
 
     async function updateObj(values) {
         debugger
@@ -68,16 +73,16 @@ export const ToEnterInvitedAmount = () => {
             numSonAdultsDto: values.boyAdalt,
             isComeDto: true
         }
-        
+
         //פונקציית שליחה לעידכון הנתונים
         try {
             await axios.put(`https://localhost:44325/api/InvitedToEvent/updateTheInvitedToEvent/${newInvited.idInvitedToEventDto}`, InvitedtoEventupdate).then(x => {
-            console.log(x.data)
-            debugger
+                console.log(x.data)
+                debugger
             })
         }
         catch{
-           
+
         }
         success("הפרטים נרשמו בהצלחה")
         n("/showeventorders")
@@ -106,8 +111,8 @@ export const ToEnterInvitedAmount = () => {
         console.log(dateOfEvent)
 
     }, [])
-   
-    
+
+
     return <div className='py-5 container'>
         <Box
             sx={{
@@ -128,6 +133,7 @@ export const ToEnterInvitedAmount = () => {
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField
+                            placeholder="21"
                             error={formik.touched.girlAdalt && Boolean(formik.errors.girlAdalt)}
                             helperText={formik.touched.girlAdalt && formik.errors.girlAdalt}
                             value={formik.values.girlAdalt}

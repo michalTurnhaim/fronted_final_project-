@@ -41,19 +41,19 @@ export const AddNewEvent = () => {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
     }
-    if(activeStep === steps.length - 1){
+    if (activeStep === steps.length - 1) {
       // const chec = () => {
       //   debugger
-      
-        sendobj()
-        success("הארוע נוסף בהצלחה")
-    navigate("/ShowEventOfOwner")
+
+      sendobj()
+      success("ההזמנות נשלחו בהצלחה")
+      navigate("/ShowEventOfOwner")
       // }
       //--------------------------
       //יש לעשות בדיקת תקינות!!!
       //--------------------------
       //שליפת סוגי ארועים
-    
+
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
@@ -91,7 +91,7 @@ export const AddNewEvent = () => {
     });
   };
 
-//איזה פונקציה להפעיל בכל שלב
+  //איזה פונקציה להפעיל בכל שלב
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -104,7 +104,7 @@ export const AddNewEvent = () => {
         return "Unknown step";
     }
   }
-  
+
   //step 1
   const SaveEvent = () => {
     let listtypes = useSelector(n => n.TypeEventReducer.listTypeEvent);
@@ -160,7 +160,7 @@ export const AddNewEvent = () => {
     </Grid>
 
   }
- 
+
   //step 2
   const DownloadSample = () => {
 
@@ -175,7 +175,7 @@ export const AddNewEvent = () => {
       const fileName = 'a.xlsx'; // שנה את 'data.xlsx' לשם הקובץ הרצוי
       const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       const url = URL.createObjectURL(blob);
-  
+
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download', fileName);
@@ -183,13 +183,13 @@ export const AddNewEvent = () => {
       link.click();
       document.body.removeChild(link);
     }
-  
+
     return <Grid>
-      
+
       <Typography variant="h6">ומלאו את כל הנתונים ע"פ השדות הנכונים exel הורידו קובץ </Typography>
       <Grid dir="rtl">
-      <Button className="btn btn" sx={{color: "#3b3a30", backgroundColor:"#c0ded9",marginTop:'8px',mt:4}} onClick={() => handleDownload()} startIcon={<CloudDownloadIcon sx={{ml:1}}/>}> exel הורדה קובץ </Button>
-   </Grid>
+        <Button className="btn btn" sx={{ color: "#3b3a30", backgroundColor: "#c0ded9", marginTop: '8px', mt: 4 }} onClick={() => handleDownload()} startIcon={<CloudDownloadIcon sx={{ ml: 1 }} />}> exel הורדה קובץ </Button>
+      </Grid>
     </Grid>
   }
 
@@ -197,12 +197,12 @@ export const AddNewEvent = () => {
   const UploadExcel = () => {
     let obj = JSON.parse(sessionStorage.getItem('newEventDatiels'))
     console.log(obj);
-  
+
     // const chec = () => {
     //   debugger
     //   sendobj()
-  
-  
+
+
     // }
     // //--------------------------
     // //יש לעשות בדיקת תקינות!!!
@@ -216,10 +216,10 @@ export const AddNewEvent = () => {
     //     axios.put(`https://localhost:44325/api/Functions/BeforSendingEmail/${x.data}`).then(n => {
     //       debugger
     //     })
-  
+
     //   })
-  
-  
+
+
     // }
     let d = useDispatch()
     useEffect(() => {
@@ -229,14 +229,14 @@ export const AddNewEvent = () => {
         d(FillAllTypeEvent(k.data))
       })
     }, [])
-  
+
     return <Grid>
       <Typography variant="h6" sx={{ textAlign: 'center', ml: 4, mt: 2 }}>להעלות קובץ עם פרטי המוזמנים שמלאתם</Typography>
       <UploadForm></UploadForm>
       {/* <Button sx={{ backgroundColor: "#c0ded9" ,color:"#3b3a30",mt:3 }} onClick={() => chec()}>לסיום</Button> */}
     </Grid>
   }
-  
+
 
   return (
     <Box sx={{ width: '80%', mt: 4, mx: 'auto', textAlign: 'center', backgroundColor: "#eaece5" }} justifyContent="center">

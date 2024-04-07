@@ -9,7 +9,7 @@ import { InvitedtReducer } from "./reducers/InvitedReducer"
 import { ListInvitedReducer } from "./reducers/listInvitedReducer"
 
 
-const reducer = combineReducers({ TypeEventReducer, InvitedToEventReducer, OwnerOfEventReducer, TypeReducer, FlagReducer, ListInvitedReducer, InvitedtReducer })
+const reducer = combineReducers({ TypeEventReducer, InvitedToEventReducer, OwnerOfEventReducer, TypeReducer, FlagReducer, ListInvitedReducer, InvitedtReducer})
 const newstore = createStore(reducer)
 window.store = newstore
 export default newstore

@@ -123,9 +123,8 @@ export const AddNewEvent = () => {
 
     const findIdEvent = (e) => {
       debugger
-      let i = listtypes.filter(x => x.nameTypeEventDto == e.target.value)[0].idTypeEventDto
-
-      setmyObj({ ...myObj, idTypeEventDto: i, EmailOwnerOfEvent: user.emailInvitedDto })
+      let index = listtypes.filter(x => x.nameTypeEventDto == e.target.value)[0].idTypeEventDto
+      setmyObj({ ...myObj, idTypeEventDto: index, EmailOwnerOfEvent: user.emailInvitedDto })
     }
     return <Grid>
       <Typography variant="h4" style={{ textAlign: "center", fontFamily: 'Arial', fontWeight: 'bold', color: '#b2c2bf', position: 'relative' }}
@@ -169,6 +168,13 @@ export const AddNewEvent = () => {
         ['מייל', 'שם פרטי', 'שם משפחה']
       ];
       const worksheet = XLSX.utils.aoa_to_sheet(data);
+      worksheet['A1'].s = { font: { bold: true } };
+      worksheet['!cols'] = [{ width: 20 }, { width: 15 }, { width: 15 }]; 
+      Object.keys(worksheet).forEach(cell => {
+        if (cell.endsWith('1')) { // Check if it's the first row
+          worksheet[cell].s = { fill: { fgColor: { rgb: 'FFFF00' } } }; // Set background color to yellow
+        }
+      });
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
       const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });

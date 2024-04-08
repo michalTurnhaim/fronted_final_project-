@@ -19,6 +19,7 @@ const VisuallyHiddenInput = styled('input')({
   whiteSpace: 'nowrap',
   width: 1,
 });
+
 export class UploadForm2 extends React.Component {
 
   constructor(props) {
@@ -28,11 +29,12 @@ export class UploadForm2 extends React.Component {
       file: null,
     };
   }
+
   async submit(e) {
     e.preventDefault();
     const url = `https://localhost:44325/api/Functions/up`;
     const formData = new FormData();
-    formData.append('file', this.state.file, this.state.file.name); // add the file to the form data
+    formData.append('file', this.state.file, this.state.file.name); 
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -41,7 +43,7 @@ export class UploadForm2 extends React.Component {
 
     try {
       const response = await axios.post(url, formData, config);
-      let o={"flag":true}
+      let o = { "flag": true }
       sessionStorage.setItem('fileup', JSON.stringify(o))
       success("הקובץ עלה בהצלחה ניתן להמשיך הלאה")
     } catch (errorr) {
@@ -52,8 +54,6 @@ export class UploadForm2 extends React.Component {
   setFile(e) {
     this.setState({ file: e.target.files[0] });
   }
-
-
 
   render() {
     return (
@@ -72,19 +72,17 @@ export class UploadForm2 extends React.Component {
             alignItems="center"
             dir="rtl">
             <Grid item xs={12} sm={9} md={9}>
-            <Button component="label" sx={{ color: "#3b3a30", backgroundColor: "#c0ded9" }} variant="contained" onChange={e => this.setFile(e)} startIcon={<CloudUploadIcon sx={{ml:1}} />}>
+              <Button component="label" sx={{ color: "#3b3a30", backgroundColor: "#c0ded9" }} variant="contained" onChange={e => this.setFile(e)} startIcon={<CloudUploadIcon sx={{ ml: 1 }} />}>
                 בחירת קובץ
-            <VisuallyHiddenInput accept=".jpg,.png"  type="file" />
+                <VisuallyHiddenInput accept=".jpg,.png" type="file" />
               </Button>
             </Grid>
             <Grid item xs={12} sm={3} md={3}>
-               <Button sx={{ color: "#3b3a30", backgroundColor: "#c0ded9" }} type="submit">העלה</Button>
+              <Button sx={{ color: "#3b3a30", backgroundColor: "#c0ded9" }} type="submit">העלה</Button>
             </Grid >
           </Grid>
         </Box>
       </form>
-
-
     );
   }
 }

@@ -10,9 +10,11 @@ import { success, error } from "./sweetAlert";
 import { useNavigate } from "react-router";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 //יבוא ספריות לבדיקת תקינות
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+
 //סכמה של ערכים תקינים
 const validationSchema = yup.object({
     firstName: yup.string()
@@ -35,16 +37,19 @@ const validationSchema = yup.object({
         .max(20, 'מקסימום אורך הסיסמא הוא 20')
         .required('שדה חובה'),
 });
+
 export const Register = () => {
+
+    //משתנים
+    const [showPassword, setShowPassword] = React.useState(false);
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
     //משתנה לבדיקת התקינות
     const formik = useFormik({
         initialValues: { firstName: '', lastName: '', email: '', password: '' },
         validationSchema: validationSchema,
         onSubmit: (values) => { chec(values) },
     });
-
     let newobj = {}
-
     let navigate = useNavigate()
 
     const Background = styled("div")({
@@ -56,16 +61,18 @@ export const Register = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
     });
-    const chec = (values) => {
 
+    //שמירת הערכים שהוזנו 
+    const chec = (values) => {
         let obj = {
             emailInvitedDto: values.email,
             firstNameInvitedDto: values.firstName,
             lastNameInvitedDto: values.lastName,
             passwordDto: values.password,
         }
-
         newobj = { ...obj }
+
+        //בדיקה אם משתמש זה קיים כבר במערכת
         axios.get(`https://localhost:44325/api/Invited/checEmailIfExists/${obj.emailInvitedDto}`).then(x => {
             if (x.status == 204)
                 addInvited()
@@ -73,11 +80,11 @@ export const Register = () => {
                 error("פרטיך מזוהים במערכת")
         }
         )
-        //  addInvited()
     }
+
+    //הוספת משתמש
     const addInvited = () => {
         axios.post(`https://localhost:44325/api/Invited/addTheInvited`, newobj).then(x => {
-
             console.log(x.data)
             if (x.status = 200) {
                 success("נוספת בהצלחה")
@@ -86,12 +93,7 @@ export const Register = () => {
             else
                 error("קרתה שגיאה")
         })
-
-
     }
-    const [showPassword, setShowPassword] = React.useState(false);
-
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
@@ -107,13 +109,8 @@ export const Register = () => {
                 textAlign: 'start',
                 pt: 12
             }}>
-            {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
-                            <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
-                        </svg> */}
             <Typography variant="h3" sx={{ mt: -8, textAlign: "center", fontFamily: 'Arial', fontWeight: 'bold', color: '#b2c2bf', position: 'relative' }} >
                 הרשמה לאתר
-                {/* <span style={{ display: 'block', position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', height: '5px', background: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1440 320\'%3E%3Cpath fill=\'%23b2c2bf\' d=\'M0,288L80,245.3C160,203,320,117,480,117.3C640,117,800,203,960,213.3C1120,224,1280,160,1360,128L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z\'%3E%3C/path%3E%3C/svg%3E")' }}></span> */}
             </Typography>
             <Card item xs={12} sm={12} sx={{ mt: 3 }}>
                 <CardHeader
@@ -153,7 +150,6 @@ export const Register = () => {
                                 id="lastName"
                                 name="lastName"
                                 type="text"
-
                                 color="primary"
                                 variant="outlined"
                                 label="שם משפחה"
@@ -161,7 +157,6 @@ export const Register = () => {
                         </Grid>
                         <Grid item xs={12} sm={12} >
                             <TextField sx={{ mt: 2, ml: 6, mr: 4 }}
-
                                 error={formik.touched.email && Boolean(formik.errors.email)}
                                 helperText={formik.touched.email && formik.errors.email}
                                 value={formik.values.email}
@@ -170,7 +165,6 @@ export const Register = () => {
                                 id="email"
                                 name="email"
                                 type="email"
-
                                 color="primary"
                                 variant="outlined"
                                 label="מייל" />
@@ -194,8 +188,7 @@ export const Register = () => {
                                                 aria-label="toggle password visibility"
                                                 onClick={handleClickShowPassword}
                                                 onMouseDown={handleMouseDownPassword}
-                                                edge="end"
-                                            >
+                                                edge="end" >
                                                 {showPassword ? <VisibilityOff /> : <Visibility />}
                                             </IconButton>
                                         </InputAdornment>
@@ -211,9 +204,4 @@ export const Register = () => {
             </Card >
         </Box >
     </div >
-
-
-
-
-
 }

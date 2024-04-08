@@ -1,9 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
-import { useRef, useState, useEffect } from "react";
-import { FillFilterInvitedToEvent } from "../redux/action/InvitedToEventFilterAction";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { TextField, CssBaseline, Avatar, Typography, FormControlLabel, Button, Box, Grid } from "@mui/material";
+import { TextField, Avatar, Typography, FormControlLabel, Button, Box, Grid } from "@mui/material";
 import { success } from "./sweetAlert";
 import EscalatorWarningIcon from '@mui/icons-material/EscalatorWarning';
 
@@ -18,7 +17,6 @@ const validationSchema = yup.object({
         .number()
         .min(0, 'מינימום  0')
         .max(10, 'מקסימום 10'),
-
     boys: yup
         .number()
         .min(0, 'מינימום  0')
@@ -27,7 +25,6 @@ const validationSchema = yup.object({
         .number()
         .min(0, 'מינימום  0')
         .max(10, 'מקסימום 10'),
-
     boyAdalt: yup
         .number()
         .min(0, 'מינימום  0')
@@ -37,19 +34,25 @@ const validationSchema = yup.object({
         .number()
         .min(0, 'מינימום  0')
         .max(10, 'מקסימום 10'),
-
     boyTeneeger: yup
         .number()
         .min(0, 'מינימום  0')
         .max(10, 'מקסימום 10')
 });
-export const ToEnterInvitedAmount = () => {
 
+
+export const ToEnterInvitedAmount = () => {
+    //משתנים
     const params = useLocation()
     let n = useNavigate()
     let myinvited = useSelector(l => l.InvitedToEventReducer.objInvit)
     const [newInvited, setnewInvited] = useState(params.state)
-
+    let newDate = new Date()
+    let date = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+    const [listOwner, setListOwner] = useState([])
+    const [dateOfEvent, setdateOfEvent] = useState(new Date())
     //פונקציות ומשתנים לבדיקת תקינות
     const formik = useFormik({
         initialValues: {
@@ -64,9 +67,8 @@ export const ToEnterInvitedAmount = () => {
         onSubmit: (values) => { updateObj(values) },
     });
 
-
+    //עדכון כמות המוזמנים
     async function updateObj(values) {
-
         const InvitedtoEventupdate = {
             ...newInvited,
             numGirlsDto: values.girls,
@@ -86,36 +88,22 @@ export const ToEnterInvitedAmount = () => {
             })
         }
         catch {
-
         }
         success("הפרטים נרשמו בהצלחה")
         n("/showeventorders")
     }
-    let newDate = new Date()
-    let date = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
-    const [listOwner, setListOwner] = useState([])
 
-    const [dateOfEvent, setdateOfEvent] = useState(new Date())
-
+    //בעת טעינת הדךף
     useEffect(() => {
-
         axios.get("https://localhost:44325/api/OwnerOfEvent/getAllOwnerOfEvent").then(x => {
-
-            console.log(x.data)
             setListOwner(...listOwner, x.data)
-
         })
         for (let index = 0; index < listOwner.length; index++) {
             if (listOwner[index].idEventDto == myinvited.idEventDto)
                 setdateOfEvent(...dateOfEvent, listOwner[index].dateOfEventDto)
 
         }
-        console.log(dateOfEvent)
-
     }, [])
-
 
     return <div className='py-5 container'>
         <Box
@@ -174,7 +162,6 @@ export const ToEnterInvitedAmount = () => {
                             id="girls"
                             label="הכנס כמות ילדות"
                             type="number"
-
                             fullWidth
                         />
                     </Grid>
@@ -192,7 +179,6 @@ export const ToEnterInvitedAmount = () => {
                             fullWidth
                         />
                     </Grid>
-
                     <Grid item xs={12} sm={6}>
                         <TextField
                             error={formik.touched.girlTeneeger && Boolean(formik.errors.girlTeneeger)}
@@ -219,10 +205,8 @@ export const ToEnterInvitedAmount = () => {
                             id="boyTeneeger"
                             type="number"
                             fullWidth>
-
                         </TextField>
                     </Grid>
-
                 </Grid>
                 <Button
                     type="submit"
@@ -232,7 +216,6 @@ export const ToEnterInvitedAmount = () => {
                 >
                     אישור
                 </Button>
-
             </Box>
         </Box>
     </div>

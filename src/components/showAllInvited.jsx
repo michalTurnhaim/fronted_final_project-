@@ -2,45 +2,37 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import "./showAllInvited.css"
 import axios from "axios";
-import { useLocation, useParams } from "react-router";
+import { useLocation } from "react-router";
 import { getList } from "../redux/action/listInvitedAction";
 import { useDispatch } from "react-redux";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
+
 export const ShowAllInvited = () => {
 
+    //משתנים
     let d = useDispatch();
     let params = useLocation();
     let obj = params.state;
     let myObj = useSelector(x => x.OwnerOfEventReducer.object)
     console.log("ShowAllInvited", obj);
-
-    // let list= JSON.parse(sessionStorage.getItem('ListOfInvitedPerOwner'))
     const [list, setList] = useState([])
-    //  console.log(list);
 
+    //בעת טעינת הדף
     useEffect(() => {
-
         axios.get(`https://localhost:44325/api/Functions/invitedToEventDtoList/${myObj.idEventDto}`).then((k) => {
             d(getList(k.data))
-            //  sessionStorage.setItem('ListOfInvitedPerOwner', JSON.stringify(k.data))
             update_list(k.data)
         }
         )
-        //list = JSON.parse(sessionStorage.getItem('ListOfInvitedPerOwner'))
     }, [])
+
+    //עדכון הרשימה של המוזמנים לארוע
     const update_list = (data) => {
         setList(data)
     }
-    return <>
-        {/* <Grid className="row">
-            <Grid className="col-lg-10 mx-auto mb-4">
-                <Grid className="section-title text-center ">
-                    <h3 className="top-c-sep">Grow your career with us</h3>
 
-                </Grid>
-            </Grid>
-        </Grid> */}
+    return <>
         {list.map(x => (
             <Box
                 sx={{
@@ -57,8 +49,6 @@ export const ShowAllInvited = () => {
                     alignItems="center"
                     dir="rtl">
                     <Grid className="container" key={x}>
-
-
                         <div className="row">
                             <div className="col-lg-10 mx-auto">
                                 <div className="career-search mb-60">
@@ -86,19 +76,12 @@ export const ShowAllInvited = () => {
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
-
                             </div>
                         </div>
-
                     </Grid>
                 </Grid>
             </Box>
         ))
         }
-
     </>
 }

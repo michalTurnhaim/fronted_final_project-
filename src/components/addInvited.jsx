@@ -10,6 +10,7 @@ import * as yup from 'yup';
 import { Button } from "@mui/base";
 import Grid from "@mui/system/Unstable_Grid";
 import { useNavigate } from "react-router";
+
 //סכמה של ערכים תקינים
 const validationSchema = yup.object({
     firstName: yup.string()
@@ -39,28 +40,29 @@ export const AddInvited = () => {
     let invitedtoevent = {}
     let n = useNavigate()
     let d = useDispatch()
+
+    //משתנה לבדיקות התקינות
     const formik = useFormik({
         initialValues: { firstName: '', lastName: '', email: '' },
         validationSchema: validationSchema,
         onSubmit: (values) => { chec(values) },
     });
-    const chec = (values) => {
 
+    //שמירת הנתונים שהוזנו ואתחול הסיסמא
+    const chec = (values) => {
         let num = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000
         password = num
-
         let user = { emailInvitedDto: values.email, firstNameInvitedDto: values.firstName, lastNameInvitedDto: values.lastName, passWordDto: num }
         invitedtoevent = { idEventDto: obj.idEventDto, idTypeInviteDto: 6002, isComeDto: false, emailInvitedDto: values.email }
         add(values.email, user)
     }
-
+    //הוספת המוזמן
     async function add(email, user) {
-
         let flag = false
         let flag2 = false
         setbool(false)
-        //מעבר על רשימת המוזמנים לארוע הספציפי 
 
+        //מעבר על רשימת המוזמנים לארוע הספציפי 
         for (let i = 0; i < list.length; i++) {
             const element = list[i];
             //בדיקה אם קיים מוזמן זה כבר
@@ -86,7 +88,7 @@ export const AddInvited = () => {
 
                         })
                     }
-
+                    //אם רשום 
                     else {
                         password = c.data.passWordDto
                         user = { ...user, passWordDto: c.data.passWordDto }
@@ -98,32 +100,32 @@ export const AddInvited = () => {
             catch {
 
             }
-            //הכנסת מוזמן לארוע חדש
+
+            //הכנסת מוזמן לארוע שיצרו עכשיו
             try {
                 await axios.post("https://localhost:44325/api/InvitedToEvent/addTheInvitedToEvent", invitedtoevent).then(x => {
                     console.log(x.data)
-
-
                 })
             }
             catch {
 
             }
+
+            //שליחת המייל למוזמן
             try {
                 await axios.get(`https://localhost:44325/api/Functions/SendEmail/${user.emailInvitedDto}/${password}/${obj.nameFileInvitationDto}`).then(n => {
-
                 })
             }
-            catch { }
+            catch {
+
+            }
             success("המוזמן נוסף בהצלחה")
             setbool(true)
             n("/sideBar/showAllInvited")
-
         }
     }
 
     return <div className='py-5 container'>
-
         <Box
             sx={{
                 marginTop: 8,
@@ -131,8 +133,7 @@ export const AddInvited = () => {
                 flexDirection: 'column',
                 alignItems: 'center',
                 textAlign: 'start',
-            }}
-        >
+            }}>
             <Avatar className='p-4' sx={{ backgroundColor: "#b2c2bf" }}>
                 <PersonAddAlt1Icon />
             </Avatar>
@@ -148,12 +149,9 @@ export const AddInvited = () => {
                             value={formik.values.firstName}
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
-                            // margin="normal"
                             fullWidth
                             id="firstName"
                             name="firstName"
-
-
                             label="שם פרטי"
                         /></Grid>
                     <Grid item xs={12} sm={12}>
@@ -180,25 +178,18 @@ export const AddInvited = () => {
                             value={formik.values.email}
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
-                            // margin="normal"
                             fullWidth
                             name="email"
-
                             type="email"
                             id="email"
-
-
                             label="כתובת מייל" /></Grid>
-
-
                     <Grid item xs={12} sm={12} sx={{ textAlign: 'center' }}>
                         <Button
                             disabled={!bool}
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 2, mb: 5, marginTop: '16px', alignSelf: 'center', backgroundColor: 'red' }}
-                        >
+                            sx={{ mt: 2, mb: 5, marginTop: '16px', alignSelf: 'center', backgroundColor: 'red' }}>
                             אישור
                         </Button>
                     </Grid>

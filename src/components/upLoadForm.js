@@ -19,6 +19,7 @@ const VisuallyHiddenInput = styled('input')({
   whiteSpace: 'nowrap',
   width: 1,
 });
+
 export class UploadForm extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +28,7 @@ export class UploadForm extends React.Component {
       file: null,
     };
   }
+
   async submit(e) {
     e.preventDefault();
     const url = `https://localhost:44325/api/Functions/up`;
@@ -50,8 +52,6 @@ export class UploadForm extends React.Component {
     this.setState({ file: e.target.files[0] });
   }
 
-
-
   render() {
     return (
       <form onSubmit={e => this.submit(e)}>
@@ -69,9 +69,9 @@ export class UploadForm extends React.Component {
             alignItems="center"
             dir="rtl">
             <Grid item xs={12} sm={9} md={9}>
-              <Button component="label" sx={{ color: "#3b3a30", backgroundColor: "#c0ded9", mt: 3 }} variant="contained"   onChange={e => this.setFile(e)} startIcon={<CloudUploadIcon sx={{ ml: 1 }} />}>
+              <Button component="label" sx={{ color: "#3b3a30", backgroundColor: "#c0ded9", mt: 3 }} variant="contained" onChange={e => this.setFile(e)} startIcon={<CloudUploadIcon sx={{ ml: 1 }} />}>
                 בחירת קובץ
-  <VisuallyHiddenInput type="file" accept=".xlsx" />
+                <VisuallyHiddenInput type="file" accept=".xlsx" />
               </Button>
             </Grid>
             <Grid item xs={12} sm={3} md={3}>

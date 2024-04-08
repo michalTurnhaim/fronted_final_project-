@@ -14,8 +14,6 @@ const show = (text, type) => {
         icon: type == "success" ? 'success' : "error",
         showCancelButton: true,
         cancelButtonColor: '#b2c2bf',
-        // confirmButtonColor: '#3b3a30',
-        // confirmButtonText: 'אישור',
         cancelButtonText: 'סגור'
     });
 }

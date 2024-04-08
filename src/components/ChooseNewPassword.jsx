@@ -6,16 +6,17 @@ import { error, success } from "./sweetAlert";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
+//בחירת סיסמא חדשה
 export const ChooseNewPassword = () => {
     let checkthesamepassword = useRef()
     let password = useRef()
     let navigate = useNavigate()
-    async function changePassword() {
 
+    //שינוי סיסמא
+    async function changePassword() {
         if (checkthesamepassword.current.value != null && password.current.value != null)
             if (checkthesamepassword.current.value != password.current.value)
                 error("הסיסמאות לא תואמות")
-
             else {
                 let Change_User_Password = JSON.parse(sessionStorage.getItem('Change_User_Password'))
                 let obj = { ...Change_User_Password, passWordDto: Number(password.current.value) }
@@ -30,6 +31,7 @@ export const ChooseNewPassword = () => {
                 navigate("/connect")
             }
     }
+
     return <div>
         <Box
             sx={{
@@ -39,7 +41,6 @@ export const ChooseNewPassword = () => {
                 textAlign: 'start',
                 pt: 12
             }}>
-
             <Card item xs={12} sm={12}>
                 <CardHeader
                     sx={{ bgcolor: "#b2c2bf" }}
@@ -57,12 +58,9 @@ export const ChooseNewPassword = () => {
                     <Grid item xs={12} sm={12} >
                         <TextField sx={{ mt: 2, ml: 6, mr: 4 }} inputRef={checkthesamepassword} required id="outlined-basic" color="primary" variant="outlined" label="אימות הסיסמא החדשה" />
                     </Grid>
-
-
                     <Grid item xs={12} sm={12} >
                         <Button sx={{ mt: 2, ml: 6, mr: 6, bgcolor: "#c0ded9", color: "#3b3a30" }} onClick={() => changePassword()}>אישור</Button>
                     </Grid>
-
                 </CardContent>
             </Card>
         </Box>

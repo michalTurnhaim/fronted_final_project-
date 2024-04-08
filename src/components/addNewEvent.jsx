@@ -20,15 +20,12 @@ import * as XLSX from 'xlsx';
 import { success, error } from './sweetAlert';
 import { useNavigate } from "react-router";
 
-
-
-// const steps = ['העלאת קובץ אקסל', 'הורדת קובץ אקסל ומילוי מוזמנים בקובץ', 'הכנסת פרטי ארוע והעלאת הזמנה'];
 const steps = ['הכנסת פרטי ארוע והעלאת הזמנה', 'הורדת קובץ אקסל ומילוי מוזמנים בקובץ', 'העלאת קובץ אקסל'];
 export const AddNewEvent = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-
   let navigate = useNavigate()
+
   const isStepOptional = (step) => {
     return step === 1;
   };
@@ -38,10 +35,13 @@ export const AddNewEvent = () => {
   };
 
   const handleNext = () => {
-
     let newSkipped = skipped;
+    //האם מלאו את כל השדות בסטפר הקודם
     let flag = JSON.parse(sessionStorage.getItem('allfeild'))
+    //האם העלו הזמנה
     let flagup = JSON.parse(sessionStorage.getItem('fileup'))
+
+    //אם מלאו את כל השדות
     if (flag && flagup) {
       if (isStepSkipped(activeStep)) {
         newSkipped = new Set(newSkipped.values());
@@ -51,45 +51,39 @@ export const AddNewEvent = () => {
       setSkipped(newSkipped);
 
     } else
+      //אם לא מלאו את כל השדות תוצג השגיאה
       error("יש למלאות את כל השדות")
 
 
     if (activeStep === steps.length - 1) {
-
       sessionStorage.setItem('fileup', null)
       sessionStorage.setItem('allfeild', null)
-
       sendobj()
       success("הארוע נוסף בהצלחה")
       sessionStorage.setItem('newEventDatiels', null)
       navigate("/ShowEventOfOwner")
-
-
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       setSkipped(newSkipped);
     }
-
   };
+
   const sendobj = () => {
-
+    //שמירת הנתונים שהוכנסו (פרטי הארוע)
     let obj = JSON.parse(sessionStorage.getItem('newEventDatiels'))
+    //עדכון פרטי ארוע
     axios.post(`https://localhost:44325/api/Functions/postowner`, obj).then(x => {
-
-      console.log(x.data)
+      //שליחת מייל למוזמנים
       axios.put(`https://localhost:44325/api/Functions/BeforSendingEmail/${x.data}`).then(n => {
-
       })
-
     })
   }
+
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   const handleSkip = () => {
     if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
       throw new Error("You can't skip a step that isn't optional.");
     }
 
@@ -120,13 +114,10 @@ export const AddNewEvent = () => {
     let listtypes = useSelector(n => n.TypeEventReducer.listTypeEvent);
     let d = useDispatch();
     let user = JSON.parse(sessionStorage.getItem('Current_User'));
-
     let nowDate = Date.now();
     const [myObj, setMyObj] = useState({});
-
     const [error, setError] = useState('');
     const [addressError, setAddressError] = useState('');
-
     sessionStorage.setItem('newEventDatiels', JSON.stringify(myObj))
 
     //משתנים לצורך בדיקה אם מלאו את כל השדות 
@@ -134,54 +125,64 @@ export const AddNewEvent = () => {
     const [fa, setfa] = useState(false)
     const [at, setat] = useState(false)
 
+    useEffect(() => {
+      axios.get('https://localhost:44325/api/typeEvent/getAllTypeEvent').then(k => {
+        d(FillAllTypeEvent(k.data))
+      })
+    }, [])
     //בדיקת ערך התאריך שהוזן
     function handleInputChange(e) {
       const inputValue = e.target.value;
       const isValidDate = validateDate(inputValue); // בדיקת תקינות תאריך
 
+      //אם הערך שהוזן תקין
       if (isValidDate) {
-
         setMyObj({ ...myObj, DateOfEvent: inputValue })
         setfd(true)
         let allFieldsFilled = true;
+        //האם מלאו את השדות האחרים
         if (!fa) {
           allFieldsFilled = false;
         }
-
         if (!at) {
           allFieldsFilled = false;
         }
         AllInputFill(allFieldsFilled)
+        // איפוס השגיאה במידה והתאריך תקין
+        setError('');
+      }
 
-        setError(''); // איפוס השגיאה במידה והתאריך תקין
-      } else {
-        setError('תאריך לא חוקי'); // הצגת השגיאה אם התאריך אינו חוקי
+      // הצגת השגיאה אם התאריך אינו חוקי
+      else {
+        setError('תאריך לא חוקי');
       }
     };
+
+    // בדיקת תקינות תאריך
     const validateDate = (dateString) => {
-      // בדיקת תקינות תאריך ת
       return Date.parse(dateString) > nowDate;
     };
+
     //בדיקת הערך שהוזן בכתובת הארוע
     function handleAddressChange(e) {
       const inputValue = e.target.value;
       const isValidAddress = validateAddress(inputValue);
-
+      //אם הערך שהוזן תקין
       if (isValidAddress) {
         setMyObj({ ...myObj, AdressOfEvent: inputValue })
         setfa(true)
         let allFieldsFilled = true;
+        //האם מלאו את השדות האחרים
         if (!fd) {
           allFieldsFilled = false;
         }
-
-
         if (!at) {
           allFieldsFilled = false;
         }
         AllInputFill(allFieldsFilled)
         setAddressError('');
-      } else {
+      }
+      else {
         setAddressError('כתובת לא תקינה');
       }
     };
@@ -192,62 +193,35 @@ export const AddNewEvent = () => {
 
     //בדיקת תקינות לבחירת סוג ארוע
     function handleEventTypeChange(e) {
-
       const selectedValue = e.target.value;
-
       let selectedOption = listtypes.filter(x => x.nameTypeEventDto == selectedValue)[0]
       const id = selectedOption.idTypeEventDto;
       const isValidEventType = !!id;
 
-
+      //אם הערך שהוזן תקין
       if (isValidEventType) {
-        // obj = { ...obj, idTypeEventDto: id, EmailOwnerOfEvent: user.emailInvitedDto}
         setMyObj({ ...myObj, idTypeEvent: id, EmailOwnerOfEvent: user.emailInvitedDto })
         setat(true)
         let allFieldsFilled = true;
 
+        //אם הערך שהוזן תקין
         if (!fd) {
           allFieldsFilled = false;
         }
-
         if (!fa) {
           allFieldsFilled = false;
         }
-
-
-
         AllInputFill(allFieldsFilled)
-
-
-      }
-      else {
-
-        // setEventTypeError('לבחור סוג ארוע יש');
       }
     };
 
-
-    useEffect(() => {
-
-      axios.get('https://localhost:44325/api/typeEvent/getAllTypeEvent').then(k => {
-
-        d(FillAllTypeEvent(k.data))
-
-
-      })
-    }, [])
-    // AllInputFill()
     sessionStorage.setItem('newEventDatiels', JSON.stringify(myObj))
     //שינוי המשתנה כדי שיוכל לעבור לסטפ הבא
     const AllInputFill = (allFieldsFilled) => {
-
-
-
       if (allFieldsFilled) {
         let allFieldObj = { "fill": true };
         sessionStorage.setItem('allfeild', JSON.stringify(allFieldObj));
       }
-
       sessionStorage.setItem('newEventDatiels', JSON.stringify(myObj));
     }
 
@@ -266,8 +240,10 @@ export const AddNewEvent = () => {
               type="date"
               InputLabelProps={{ shrink: true, sx: { textAlign: "right" } }}
               onChange={handleInputChange}
-              error={!!error} // קביעת השגיאה אם קיימת
-              helperText={error} // הצגת השגיאה
+              // קביעת השגיאה אם קיימת
+              error={!!error}
+              // הצגת השגיאה
+              helperText={error}
             />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
@@ -283,8 +259,6 @@ export const AddNewEvent = () => {
             <TextField color="primary" sx={{ width: "60%" }}
               required id="outlined-select-currency-native" select label="סוג הארוע" defaultValue="סוג הארוע" SelectProps={{ native: true, }}
               helperText="יש לבחור את סוג הארוע"
-              // helperText={eventTypeError}
-              // error={!!eventTypeError}
               onChange={handleEventTypeChange}
               InputLabelProps={{ shrink: true, textAlign: "right" }}>
               <option >
@@ -307,26 +281,26 @@ export const AddNewEvent = () => {
 
   //step 2
   const DownloadSample = () => {
-
     const handleDownload = () => {
       const data = [
         ['מייל', 'שם פרטי', 'שם משפחה']
       ];
+
+      //exel יצירת קובץ ה 
       const worksheet = XLSX.utils.aoa_to_sheet(data);
       worksheet['A1'].s = { font: { bold: true } };
       worksheet['!cols'] = [{ width: 20 }, { width: 15 }, { width: 15 }];
       Object.keys(worksheet).forEach(cell => {
-        if (cell.endsWith('1')) { // Check if it's the first row
-          worksheet[cell].s = { fill: { fgColor: { rgb: 'FFFF00' } } }; // Set background color to yellow
+        if (cell.endsWith('1')) {
+          worksheet[cell].s = { fill: { fgColor: { rgb: 'FFFF00' } } };
         }
       });
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
       const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-      const fileName = 'invited.xlsx'; // שנה את 'data.xlsx' לשם הקובץ הרצוי
+      const fileName = 'invited.xlsx';
       const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       const url = URL.createObjectURL(blob);
-
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download', fileName);
@@ -336,7 +310,6 @@ export const AddNewEvent = () => {
     }
 
     return <Grid>
-
       <Typography variant="h6">ומלאו את כל הנתונים ע"פ השדות הנכונים exel הורידו קובץ </Typography>
       <Grid dir="rtl">
         <Button className="btn btn" sx={{ color: "#3b3a30", backgroundColor: "#c0ded9", marginTop: '8px', mt: 4 }} onClick={() => handleDownload()} startIcon={<CloudDownloadIcon sx={{ ml: 1 }} />}> exel הורדה קובץ </Button>
@@ -347,12 +320,9 @@ export const AddNewEvent = () => {
   //step 3
   const UploadExcel = () => {
     let obj = JSON.parse(sessionStorage.getItem('newEventDatiels'))
-    console.log(obj);
-
-
     let d = useDispatch()
-    useEffect(() => {
 
+    useEffect(() => {
       axios.get('https://localhost:44325/api/typeEvent/getAllTypeEvent').then(k => {
 
         d(FillAllTypeEvent(k.data))
@@ -362,7 +332,6 @@ export const AddNewEvent = () => {
     return <Grid>
       <Typography variant="h6" sx={{ textAlign: 'center', ml: 4, mt: 2 }}>להעלות קובץ עם פרטי המוזמנים שמלאתם</Typography>
       <UploadForm></UploadForm>
-      {/* <Button sx={{ backgroundColor: "#c0ded9" ,color:"#3b3a30",mt:3 }} onClick={() => chec()}>לסיום</Button> */}
     </Grid>
   }
 
@@ -373,16 +342,17 @@ export const AddNewEvent = () => {
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-
           if (isStepSkipped(index)) {
             stepProps.completed = false;
           }
+
           return (
             <Step key={label} sx={{ mt: 4 }} {...stepProps}>
               <StepLabel {...labelProps} >{label}</StepLabel>
             </Step>
           );
         })}
+
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
@@ -395,7 +365,6 @@ export const AddNewEvent = () => {
           <Typography sx={{ mt: 5, mb: 1 }}>{getStepContent(activeStep)}</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, mt: 10, ml: 4, mr: 4 }} >
             <Button
-
               sx={{ backgroundColor: "#b2c2bf", color: "#3b3a30", mb: 4 }}
               onClick={handleNext}>
               {activeStep === steps.length - 1 ? 'לסיום' : 'הבא'}

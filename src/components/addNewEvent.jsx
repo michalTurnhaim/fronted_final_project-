@@ -38,7 +38,7 @@ export const AddNewEvent = () => {
   };
 
   const handleNext = () => {
-    debugger
+
     let newSkipped = skipped;
     let flag = JSON.parse(sessionStorage.getItem('allfeild'))
     let flagup = JSON.parse(sessionStorage.getItem('fileup'))
@@ -71,13 +71,13 @@ export const AddNewEvent = () => {
 
   };
   const sendobj = () => {
-    debugger
+
     let obj = JSON.parse(sessionStorage.getItem('newEventDatiels'))
     axios.post(`https://localhost:44325/api/Functions/postowner`, obj).then(x => {
-      debugger
+
       console.log(x.data)
       axios.put(`https://localhost:44325/api/Functions/BeforSendingEmail/${x.data}`).then(n => {
-        debugger
+
       })
 
     })
@@ -168,7 +168,7 @@ export const AddNewEvent = () => {
       const isValidAddress = validateAddress(inputValue);
 
       if (isValidAddress) {
-        setMyObj({ ...myObj, AddressOfEvent: inputValue })
+        setMyObj({ ...myObj, AdressOfEvent: inputValue })
         setfa(true)
         let allFieldsFilled = true;
         if (!fd) {
@@ -192,7 +192,7 @@ export const AddNewEvent = () => {
 
     //בדיקת תקינות לבחירת סוג ארוע
     function handleEventTypeChange(e) {
-      debugger
+
       const selectedValue = e.target.value;
 
       let selectedOption = listtypes.filter(x => x.nameTypeEventDto == selectedValue)[0]
@@ -202,7 +202,7 @@ export const AddNewEvent = () => {
 
       if (isValidEventType) {
         // obj = { ...obj, idTypeEventDto: id, EmailOwnerOfEvent: user.emailInvitedDto}
-        setMyObj({ ...myObj, idTypeEventDto: id, EmailOwnerOfEvent: user.emailInvitedDto })
+        setMyObj({ ...myObj, idTypeEvent: id, EmailOwnerOfEvent: user.emailInvitedDto })
         setat(true)
         let allFieldsFilled = true;
 
@@ -228,9 +228,9 @@ export const AddNewEvent = () => {
 
 
     useEffect(() => {
-      debugger
+
       axios.get('https://localhost:44325/api/typeEvent/getAllTypeEvent').then(k => {
-        debugger
+
         d(FillAllTypeEvent(k.data))
 
 
@@ -240,7 +240,7 @@ export const AddNewEvent = () => {
     sessionStorage.setItem('newEventDatiels', JSON.stringify(myObj))
     //שינוי המשתנה כדי שיוכל לעבור לסטפ הבא
     const AllInputFill = (allFieldsFilled) => {
-      debugger
+
 
 
       if (allFieldsFilled) {
@@ -352,9 +352,9 @@ export const AddNewEvent = () => {
 
     let d = useDispatch()
     useEffect(() => {
-      debugger
+
       axios.get('https://localhost:44325/api/typeEvent/getAllTypeEvent').then(k => {
-        debugger
+
         d(FillAllTypeEvent(k.data))
       })
     }, [])

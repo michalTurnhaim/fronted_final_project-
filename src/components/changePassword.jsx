@@ -17,12 +17,12 @@ export const ChangePassword = () => {
     let navigate = useNavigate()
 
     async function Change() {
-        debugger
+
 
         if (myemail.current.value != null) {
             try {  // בדיקה אם כתובת מייל זו קיימת במערכת כבר
                 await axios.get(`https://localhost:44325/api/Invited/checEmailIfExists/${myemail.current.value}`).then(c => {
-                    debugger
+
                     //אם מחזיר אוביקט כלומר קיים משתמש זה כבר
                     if (c.status == 200) {
                         //בשביל הצגת תיבת אינפוט
@@ -33,7 +33,7 @@ export const ChangePassword = () => {
                     }
                 })
             }
-            catch{ }
+            catch { }
         }
         if (flag2 == false)
             error("אינך רשום במערכת")
@@ -44,7 +44,7 @@ export const ChangePassword = () => {
                 await axios.get(`https://localhost:44325/api/Functions/SendEmail/${myemail.current.value}/${password}/${"1"}`).then(
                 )
             }
-            catch{
+            catch {
             }
         }
         //שמירת הנתונים באוביקט כולל הסיסמא הזמנית
@@ -61,11 +61,11 @@ export const ChangePassword = () => {
     //פונקציה שבודקת האם הסיסמא שהוזנה  אכן תואמת לסיסמא שהתקבלה במייל
     const checkIfPasswordCorrect = () => {
         let Change_User_Password = JSON.parse(sessionStorage.getItem('Change_User_Password'))
-        debugger
+
         if (mypassword.current.value != null) {
             if (Change_User_Password.passWordDto != Number(mypassword.current.value))
                 error(":( סיסמא שגויה")
-                // setText(`סיסמא שגויה!!! יש להזין את הסיסמא שהתקבלה במייל`)
+            // setText(`סיסמא שגויה!!! יש להזין את הסיסמא שהתקבלה במייל`)
             else {
                 success("סיסמא נכונה")
                 // setText(`סיסמא נכונה`)
@@ -87,20 +87,20 @@ export const ChangePassword = () => {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                textAlign: 'center', 
+                textAlign: 'center',
                 pt: 12
-            }}> 
+            }}>
             <Card item xs={12} sm={12}>
                 <CardHeader
                     sx={{ bgcolor: "#b2c2bf" }}
                     action={
                         <>
-                            <div className="icon-container" style={{marginRight:"46%"}}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                            <div className="icon-container" style={{ marginRight: "46%" }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                 </svg></div>
-                            <Typography sx={{ mr: 12, mt: 1 }} align="center"  variant="h5" component="h5" gutterBottom color="#3b3a30">איפוס סיסמא</Typography>
+                            <Typography sx={{ mr: 12, mt: 1 }} align="center" variant="h5" component="h5" gutterBottom color="#3b3a30">איפוס סיסמא</Typography>
                         </>
                     }
                 />

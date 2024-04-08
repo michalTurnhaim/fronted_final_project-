@@ -1,4 +1,4 @@
-export const FillAllTypeEvent=(value)=>{
-    debugger
-    return {type:'FilltypeEvent-Data',payload:value}
+export const FillAllTypeEvent = (value) => {
+
+    return { type: 'FilltypeEvent-Data', payload: value }
 }

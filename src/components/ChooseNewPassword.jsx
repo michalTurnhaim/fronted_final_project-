@@ -9,22 +9,22 @@ import { useNavigate } from "react-router";
 export const ChooseNewPassword = () => {
     let checkthesamepassword = useRef()
     let password = useRef()
-    let navigate=useNavigate()
+    let navigate = useNavigate()
     async function changePassword() {
-        debugger
+
         if (checkthesamepassword.current.value != null && password.current.value != null)
             if (checkthesamepassword.current.value != password.current.value)
                 error("הסיסמאות לא תואמות")
-               
+
             else {
                 let Change_User_Password = JSON.parse(sessionStorage.getItem('Change_User_Password'))
-                let obj = { ...Change_User_Password, passWordDto: Number(password.current.value)}
+                let obj = { ...Change_User_Password, passWordDto: Number(password.current.value) }
                 //עידכון משתמש
                 try {
                     await axios.put(`https://localhost:44325/api/Invited/updateTheInvited/${obj.emailInvitedDto}`, obj).then(
                     )
                 }
-                catch{
+                catch {
                 }
                 success("הסיסמא עודכנה בהצלחה")
                 navigate("/connect")

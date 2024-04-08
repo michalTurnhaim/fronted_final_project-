@@ -150,8 +150,8 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
             {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"connect"} onClick={() => { d(FillFlagO(false), sessionStorage.setItem('Current_User', null)) }} style={{color:"#3b3a30"}}>התנתקות</NavLink></li>}
             {(!isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"register"} style={{color:"#3b3a30"}}>הרשמה</NavLink></li>}
             {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"newEvent"} style={{color:"#3b3a30"}}>הוספת ארוע חדש</NavLink></li>}
-            {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"showeventorders"} style={{color:"#3b3a30"}}>הצגת הארועים שלי</NavLink></li>}
-            {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"ShowEventOfOwner"} style={{color:"#3b3a30"}}>אשור השתתפות בשמחות</NavLink></li>}
+            {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"ShowEventOfOwner"} style={{color:"#3b3a30"}}>הצגת הארועים שלי</NavLink></li>}
+            {(isCurrentUser) && <li className="nav-item"><NavLink className="nav-link" to={"showeventorders"} style={{color:"#3b3a30"}}>אשור השתתפות בשמחות</NavLink></li>}
           {/* </div> */}
         {/* </ul> */}
         </Typography>

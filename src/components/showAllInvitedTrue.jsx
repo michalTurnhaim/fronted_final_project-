@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 export const ShowAllInvitedTrue = () => {
-    debugger
+
     let listTrue = []
     let sumnumGirlsDto = 0
     let sumnumBoysDto = 0

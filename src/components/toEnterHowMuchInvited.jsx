@@ -44,7 +44,7 @@ const validationSchema = yup.object({
         .max(10, 'מקסימום 10')
 });
 export const ToEnterInvitedAmount = () => {
-    debugger
+
     const params = useLocation()
     let n = useNavigate()
     let myinvited = useSelector(l => l.InvitedToEventReducer.objInvit)
@@ -53,8 +53,12 @@ export const ToEnterInvitedAmount = () => {
     //פונקציות ומשתנים לבדיקת תקינות
     const formik = useFormik({
         initialValues: {
-            girls: myinvited.numGirlsDto, boys: myinvited.numBoysDto, girlAdalt: myinvited.numDaughterAdultsDto
-            , boyAdalt: myinvited.numSonAdultsDto, girlTeneeger: myinvited.numTeenageGirlsDto, boyTeneeger: myinvited.numteenageBoysDto
+            girls: myinvited.numGirlsDto !== null ? myinvited.numGirlsDto : 0,
+            boys: myinvited.numBoysDto !== null ? myinvited.numBoysDto : 0,
+            girlAdalt: myinvited.numDaughterAdultsDto !== null ? myinvited.numDaughterAdultsDto : 0,
+            boyAdalt: myinvited.numSonAdultsDto !== null ? myinvited.numSonAdultsDto : 0,
+            girlTeneeger: myinvited.numTeenageGirlsDto !== null ? myinvited.numTeenageGirlsDto : 0,
+            boyTeneeger: myinvited.numteenageBoysDto !== null ? myinvited.numteenageBoysDto : 0,
         },
         validationSchema: validationSchema,
         onSubmit: (values) => { updateObj(values) },
@@ -62,7 +66,7 @@ export const ToEnterInvitedAmount = () => {
 
 
     async function updateObj(values) {
-        debugger
+
         const InvitedtoEventupdate = {
             ...newInvited,
             numGirlsDto: values.girls,
@@ -78,10 +82,10 @@ export const ToEnterInvitedAmount = () => {
         try {
             await axios.put(`https://localhost:44325/api/InvitedToEvent/updateTheInvitedToEvent/${newInvited.idInvitedToEventDto}`, InvitedtoEventupdate).then(x => {
                 console.log(x.data)
-                debugger
+
             })
         }
-        catch{
+        catch {
 
         }
         success("הפרטים נרשמו בהצלחה")
@@ -96,7 +100,7 @@ export const ToEnterInvitedAmount = () => {
     const [dateOfEvent, setdateOfEvent] = useState(new Date())
 
     useEffect(() => {
-        debugger
+
         axios.get("https://localhost:44325/api/OwnerOfEvent/getAllOwnerOfEvent").then(x => {
 
             console.log(x.data)
@@ -128,12 +132,11 @@ export const ToEnterInvitedAmount = () => {
             </Avatar>
             <Typography component="h1" variant="h5">
                 הכנס את כמות המגיעים
-          </Typography>
+            </Typography>
             <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField
-                            placeholder="21"
                             error={formik.touched.girlAdalt && Boolean(formik.errors.girlAdalt)}
                             helperText={formik.touched.girlAdalt && formik.errors.girlAdalt}
                             value={formik.values.girlAdalt}
@@ -228,7 +231,7 @@ export const ToEnterInvitedAmount = () => {
                     sx={{ mt: 2, mb: 5 }}
                 >
                     אישור
-            </Button>
+                </Button>
 
             </Box>
         </Box>

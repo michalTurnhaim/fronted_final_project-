@@ -10,7 +10,7 @@ import { Typography, Card, CardMedia, CardContent } from "@mui/material";
 import { getList } from "../redux/action/listInvitedAction";
 
 export const Ishoor = () => {
-    debugger
+
     let user = JSON.parse(sessionStorage.getItem('Current_User'))
     const [listUsers, setlistUsers] = useState([])
     const myd = useDispatch()
@@ -20,7 +20,7 @@ export const Ishoor = () => {
     let n = useNavigate()
     console.log(list);
     useEffect(() => {
-        debugger
+
         axios.get("https://localhost:44325/api/OwnerOfEvent/getAllOwnerOfEvent").then(c => {
             setlistOwnerOfEvent(c.data)
         })
@@ -50,7 +50,7 @@ export const Ishoor = () => {
 
 
     const sendObj = (item) => {
-        debugger
+
         console.log(item)
         myd(FillAllInvitedToEventObj(item))
     }

@@ -45,7 +45,7 @@ export const AddInvited = () => {
         onSubmit: (values) => { chec(values) },
     });
     const chec = (values) => {
-        debugger
+
         let num = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000
         password = num
 
@@ -55,7 +55,7 @@ export const AddInvited = () => {
     }
 
     async function add(email, user) {
-        debugger
+
         let flag = false
         let flag2 = false
         setbool(false)
@@ -77,7 +77,7 @@ export const AddInvited = () => {
                 await axios.get(`https://localhost:44325/api/Invited/checEmailIfExists/${email}`).then(c => {
                     //אם לא רשום
                     if (c.status == 204) {
-                        debugger
+
                         flag2 = true
                         //הכנסת מוזמן חדש
                         axios.post("https://localhost:44325/api/Invited/addTheInvited", user).then(x => {
@@ -95,7 +95,7 @@ export const AddInvited = () => {
                 }
                 )
             }
-            catch{
+            catch {
 
             }
             //הכנסת מוזמן לארוע חדש
@@ -106,15 +106,15 @@ export const AddInvited = () => {
 
                 })
             }
-            catch{
+            catch {
 
             }
             try {
                 await axios.get(`https://localhost:44325/api/Functions/SendEmail/${user.emailInvitedDto}/${password}/${obj.nameFileInvitationDto}`).then(n => {
-                    debugger
+
                 })
             }
-            catch{ }
+            catch { }
             success("המוזמן נוסף בהצלחה")
             setbool(true)
             n("/sideBar/showAllInvited")
@@ -138,7 +138,7 @@ export const AddInvited = () => {
             </Avatar>
             <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
                 הכנסת מוזמנים נוספים
-          </Typography>
+            </Typography>
             <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={12}>
@@ -200,7 +200,7 @@ export const AddInvited = () => {
                             sx={{ mt: 2, mb: 5, marginTop: '16px', alignSelf: 'center', backgroundColor: 'red' }}
                         >
                             אישור
-                         </Button>
+                        </Button>
                     </Grid>
                 </Grid>
             </Box>

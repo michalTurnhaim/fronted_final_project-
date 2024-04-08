@@ -5,7 +5,7 @@ const mystate = {
 }
 export const ListInvitedReducer = produce((state, action) => {
     switch (action.type) {
-        case 'getList': { debugger; state.list = action.payload; debugger}
+        case 'getList': { ; state.list = action.payload; }
             break;
         default:
             break;

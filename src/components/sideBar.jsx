@@ -15,14 +15,14 @@ export const Sidebar1 = () => {
   let obj = params.state;
   let myObj = useSelector(x => x.OwnerOfEventReducer.object)
   let dateOfEvent = myObj.dateOfEventDto
-  debugger
+
   console.log(obj);
   let list = useSelector(n => n.ListInvitedReducer.list);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   let nowDate = Date.now();
   useEffect(() => {
-    debugger
+
 
     axios.get(`https://localhost:44325/api/Functions/invitedToEventDtoList/${obj.idEventDto}`).then((k) => {
       d(getList(k.data))
@@ -45,11 +45,11 @@ export const Sidebar1 = () => {
         {<li><NavLink
           onClick={(e) => {
             if (Date.parse(dateOfEvent) < nowDate) {
-            e.preventDefault();
-            error("תאריך הארוע עבר, לא ניתן להוסיף מוזמנים")
-          
+              e.preventDefault();
+              error("תאריך הארוע עבר, לא ניתן להוסיף מוזמנים")
+
+            }
           }
-       }
           }
           style={{ color: '#3b3a30' }} to={"addInvited"}>הוספת מוזמנים</NavLink></li>}
         <li><NavLink style={{ color: '#3b3a30' }} to={"showAllInvited"}  >הצגת המוזמנים</NavLink></li>

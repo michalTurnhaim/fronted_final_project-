@@ -30,7 +30,7 @@ const validationSchema = yup.object({
         .required('שדה חובה'),
 });
 export const EzorIshi = () => {
-    debugger
+
     let n = useNavigate()
     let mail = useRef()
     let password = useRef()
@@ -76,9 +76,9 @@ export const EzorIshi = () => {
 
 
     useEffect(() => {
-        debugger
+
         axios.get('https://localhost:44325/api/InvitedToEvent/getAllInvitedToEvent').then(k => {
-            debugger
+
             // console.log(k.data)
             d(FillAllInvitedToEvent(k.data))
         })

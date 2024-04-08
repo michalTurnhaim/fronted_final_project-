@@ -7,10 +7,6 @@ import './bootstrap.css'
 import newstore from './redux/store';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/private-theming';
-import MapComponent from './components/tryAdress';
-import EventAddressInput from './components/map';
-
-
 
 function App() {
   return (

@@ -57,7 +57,7 @@ export const Register = () => {
         backgroundRepeat: "no-repeat",
     });
     const chec = (values) => {
-        debugger
+
         let obj = {
             emailInvitedDto: values.email,
             firstNameInvitedDto: values.firstName,
@@ -77,7 +77,7 @@ export const Register = () => {
     }
     const addInvited = () => {
         axios.post(`https://localhost:44325/api/Invited/addTheInvited`, newobj).then(x => {
-            debugger
+
             console.log(x.data)
             if (x.status = 200) {
                 success("נוספת בהצלחה")

@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom"
 import { Routes } from "react-router-dom"
 import { About } from "./about";
-import { EzorIshi } from "./ezorIshi";
+import { EzorIshi } from "./EzorIshi";
 import { Register } from "./register"
 import { ShowEventInvited } from "./showEventInvited";
 import { ShowEventOfOwner } from "./showEventOfOwner";
